@@ -53,7 +53,7 @@
                     <a href="#" data-bind="click: $root.Employee">Employee Detail</a>
                 </div>
                 <div>
-                    <a href="#" data-bind="click: $root.Department">Department Detail</a>
+                    <a href="#" data-bind="click: $root.DepartmentDetail">Department Detail</a>
 
                 </div>
             </div>
@@ -61,9 +61,10 @@
             <div id="EmpIndex" style="display:none">
                 <table class="table">
                     <h2 style='color:blue'> Employee Details  </h2>
-                    <tr><td><a href="#">Home</a>|<a href="#" data-bind="click: AddDepartment">Create New</a></td></tr>
-                    <tr><td>Department</td></tr>
-                    <tbody data-bind="foreach: employee">
+                    <tr><td><a href="#">Home</a>|<a href="#" data-bind="click: AddEmployee">Create New</a></td></tr>
+                
+                    <tr><td><b>Name</b></td><td><b>Designation</b></td><td><b>Emailid</b></td><td><b>Contactno</b></td></tr>
+                    <tbody data-bind="foreach: tasks ">
                         <tr>
                             <td> <span data-bind="text: Name,value:Id">Welcome</span> </td>
                             <td> <span data-bind="text: Designation ,value:Id">Welcome</span> </td>
@@ -71,22 +72,63 @@
                             <td> <span data-bind="text: Contactno ,value:Id">Welcome</span> </td>
                             <td><a href="#" data-bind="click: $root.UpdateDepartment,value:Id,value: Department">Edit</a></td>
                             <td><a href="#" data-bind="click: $root.DepartmentDetails,value:Id">Detail</a></td>
-                            <td><a href="#" data-bind="click: $root.DeleteDepartment">Delete</a></td>
+                            <td><a href="#" data-bind="click: $root.DeleteEmployee">Delete</a></td>
                         <tr>
                     </tbody>
                 </table>
             </div>
              
+            <!-- Add Employee-->
+            <div id="Empcreate" style="display:none">
+                <table class="table">
+                    <h2 style='color:blue'> Create new department </h2>
+                    <tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td><input type="text" data-bind="value :Name,text:DeptName" placeholder="Enter name "><div id="errorname" style="color:red"></div></td>
+                    </tr>
+                    <tr>
+                        <td>Designation:</td>
+                        <td><input type="text" data-bind="value : Designation,text:DeptName" placeholder="Enter designation "><div id="errordesignation" style="color:red"></div></td>
+                    </tr>
+                   
+                    <tr>
+                        <td>Emailid:</td>
+                        <td><input type="text" data-bind="value : Emailid,text:DeptName" placeholder="Enter Emailid "><div id="erroremailid" style="color:red"></div></td>
+                    </tr>
+                    <tr>
+                        <td>ContactNo:</td>
+                        <td><input type="text" data-bind="value : Contactno,text:DeptName" placeholder="Enter ContactNo "><div id="errorcontactno" style="color:red"></div></td>
+                    </tr>
+                    <tr>
+                        <td>Department:</td>
+                        <td>
+                            <select id='select' data-bind="foreach: tasks ">
+                                <option data-bind="value : Department,text:Department "></option>
+                            </select> <div id="errordept" style="color:red"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" data-bind="click: CreateEmployee" value="Create" class="btn btn-default"><input type="button" value="Create" class="btn btn-default">
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+
                 <!-- Department Home page-->
                 <div id="DeptIndex" style="display:none">
                 <table class="table">
                 <h2 style='color:blue'> Department Details  </h2> 
                 <tr><td><a href="#">Home</a>|<a href="#" data-bind="click: AddDepartment">Create New</a></td></tr>
-                 <tr><td>Department</td></tr>
+                 <tr><td><b>Department</b></td></tr>
                 <tbody data-bind="foreach: tasks"><tr>
-                           <td> <span data-bind="text: Department ,value:Id">Welcome</span> </td>
-                            <td><a href="#" data-bind="click: $root.UpdateDepartment,value:Id,value: Department">Edit</a></td>
-                            <td><a href="#" data-bind="click: $root.DepartmentDetails,value:Id">Detail</a></td>
+                           <td> <span data-bind="text: Department">Welcome</span> </td>
+                            <td><a href="#" data-bind="click: $root.UpdateDepartment">Edit</a></td>
+                            <td><a href="#" data-bind="click: $root.DepartmentDetails">Detail</a></td>
                             <td><a href="#" data-bind="click: $root.DeleteDepartment">Delete</a></td>
                <tr> 
                </tbody>
@@ -135,7 +177,7 @@
                 <!-- Detail Department-->
                 <div id="Deptdetail" style="display:none">
                     <table class="table" cellpadding="10" cellspacing="20" id="deptdetailtable">
-                        <h2 style='color:blue'>Department Details </h2>
+                      <tr><h2 style="color:blue">  Details of <b data-bind="text : DeptEdit "></b></h2></tr>
                      <tr><td>Name</td><td>Designation</td><td>Emailid</td><td>Contactno</td></tr>
                       </table>
                     <div><a href="#" data-bind="click: $root.back">Back to List</a></div>
@@ -144,7 +186,7 @@
                 <!-- Detail not found Department-->
                 <div id="detailnotfound" style="display:none">
                     <table class="table" cellpadding="10" cellspacing="20" id="datanotfound">
-                        <h2 style='color:blue'>Department Details </h2>
+                        <tr><h2 style="color:blue">  Details of <b data-bind="text : DeptEdit "></b></h2></tr>
                         <tr><td>No data found</td></tr>
                         <tr><td><a href="#" data-bind="click: $root.Back">Back to List</a></td></tr>
                     </table>

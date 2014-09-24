@@ -30,7 +30,7 @@ namespace EmpManagement.Controllers
         public JsonResult LoadEmployee()
         {
            //Thread.Sleep(2000);
-            var employeeList     = db.Employee.ToList();
+            var employeeList = db.Employee.ToList();
             if (employeeList.Count == 0)
                 {
                     return Json("Nodatafound", JsonRequestBehavior.AllowGet);

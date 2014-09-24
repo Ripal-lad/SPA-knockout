@@ -8,7 +8,9 @@ function Task(data) {
     this.Name = ko.observable(data.Name);
     this.Designation = ko.observable(data.Designation);
     this.Emailid = ko.observable(data.Emailid);
-    this.Contactno = ko.observable(data.Contactno);
+    this.Contactno = ko.observable(data.ContactNo);
+    this.EmployeeId = ko.observable(data.ID);
+    this.Deptid = ko.observable(data.DepartmentID);
 
      //    this.isDone = ko.observable(data.isDone);
 }
@@ -20,25 +22,189 @@ function AppViewModel() {
     this.DeptName = ko.observable("");  //Create
     this.DeptEdit = ko.observable(""); // Edit Name
     this.DepteditId = ko.observable("");// Edit Id
+    this.DeptDetail = ko.observable("");//Detail
+    this.Name = ko.observable("");
+    this.Designation = ko.observable("");
+    this.Emailid = ko.observable("");
+    this.Contactno = ko.observable("");
+    this.EmployeeId = ko.observable("");
+    this.Deptid = ko.observable("");
     var self = this;
     self.tasks = ko.observableArray([]);            // Home page
-    self.employee = ko.observableArray([]);
-
+    
+    //Employee List.
     this.Employee = function () {
         alert("employee");
         $("#divhome").hide();
         $("#EmpIndex").show();
-        $.getJSON("/Employee/GetDepartment/", function (allData) {
-            var ParsedData = JSON.parse(allData);
-            alert(alldata);
-            var mappedTasks = $.map(ParsedData, function (item) {
-                return new Task(item);
-            });
+        $.getJSON("/Employee/GetDepartment/", function (data) {  //check if department exist.
+            var ParsedData = JSON.parse(data);
+        //    alert(data);
+            if (data == 'serializedata') {
+            }
+            else {
+                $.getJSON("/Employee/LoadEmployee/", function (data) {  //retrieve data
 
-            self.employee(mappedTasks);
+                    var ParsedData = JSON.parse(data);
+                   // alert("data = "+data);
+                    if (data == 'Nodatafound') {
+                        alert("nodata");
+                    } else {
+                       // alert("else");
+                        var mappedTasks = $.map(ParsedData, function (item) {
+                        return new Task(item);
+                    });
+
+                        self.tasks(mappedTasks);
+                }
+                });
+        }
         });
     }
-    this.Department = function () {
+
+    //Add employee.
+    this.AddEmployee = function () {
+        alert("add");
+        $("#Empcreate").show();
+        $("#EmpIndex").hide();
+        $.getJSON("/Employee/GetDepartment/", function (data) {  //Check if department exist.
+            var ParsedData = JSON.parse(data);
+            if (data == 'NoDataFound') {
+                // alert("data undefined");
+
+            } else {
+                var mappedTasks = $.map(ParsedData, function (item) {
+                    return new Task(item);
+                });
+
+                self.tasks(mappedTasks);
+
+            }
+
+        });
+
+
+    }
+
+    //add employee into database.
+    this.CreateEmployee = function () {
+        alert("create");
+        var regexemail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        var regexname = /^[A-Z]+[a-zA-Z''-'\s]*$/;
+        var regdesignation = /^[A-Za-z- ]+$/;
+        $("#errorname").html("");
+        $("#errordept").html("");
+        $("#erroremailid").html("");
+        $("#errorcontactno").html("");
+        $("#errordesignation").html("");
+
+        var flag = false;
+        var name = this.Name();
+        var designation = this.Designation();
+        var emailid = this.Emailid();
+        var contactno = this.Contactno();
+        var department = $("#select option:selected").val();
+        alert(name + " || " + designation + " || " + emailid + " || " + contactno + " || " + department);
+        // email validation
+        if (emailid != "") {
+            if (!(emailid.match(regexemail))) {
+                $("#erroremailid").html("Invalid Email-id");
+                //  alert("inside match else");
+                flag = true;
+            }
+        }
+        else {
+            flag = true;
+            $("#erroremailid").html("This field is required.");
+
+        }
+
+        //name validation
+        if (name != "") {
+            // alert("name = " + name);
+            if (!(name.match(regexname))) {
+                flag = true;
+                $("#errorname").html("Invalid name.");
+
+            }
+        }
+        else {
+            flag = true;
+            $("#errorname").html("This field is required.");
+
+        }
+
+        // Designation Validation       
+        if (designation != "") {
+             if (!(designation.match(regdesignation))) {
+                flag = true;
+                $("#errordesignation").html("Text only.");
+
+            }
+        }
+        else {
+            flag = true;
+            $("#errordesignation").html("This field is required.");
+
+        }
+        //department validation
+        if (department == "") {
+            flag = true;
+            $("#errordept").html("This field is required.");
+          }
+
+        //contactno validation
+        if (contactno == "") {
+            flag = true;
+            $("#errorcontactno").html("This field is required.");
+
+        }
+
+        if (flag == true) {
+            alert(flag);
+         //   window.location.hash = "#/AddEmployee/";
+        }
+        alert(flag);
+
+    }
+
+    //Employeee delete
+    self.DeleteEmployee = function (data) {
+
+        alert("delete");
+        var id = this.Id();
+        alert(id);
+        if (confirm("Are you sure that you want to delete details of " + name + " ?")) {
+            self.tasks.remove(data);
+            $.ajax({
+                type: 'POST',
+                url: "/Employee/Delete/",
+                datatype: 'json',
+                data: { "ID": "" + id + "" },
+                success: function (data) {
+                    alert("success");
+                    // var deptdata = JSON.parse(data);
+                    console.log("Success");
+
+                    //  window.location.hash = '#/EmployeeList/';
+                },
+                error: function (xhr, status, errorThrown) {
+
+                    alert("error");
+                    console.log("Sorry, there was a problem!");
+                    console.log("Error: " + errorThrown);
+                    console.log("Status: " + status);
+                }
+
+            });
+        }
+        else {
+            alert("Not deleted");
+        }
+
+    }
+
+    this.DepartmentDetail = function () {
         alert("department");
         $("#DeptIndex").show();
         $("#divhome").hide();
@@ -223,6 +389,7 @@ function AppViewModel() {
         $("#Deptupdate").show();
         var deptname = this.Department();
         var id = this.Id();
+        alert(id);
         self.DeptEdit(deptname);
         self.DepteditId(id);
        }
@@ -292,10 +459,12 @@ function AppViewModel() {
     //Department details
     self.DepartmentDetails = function () {
        // alert("detail");
-       
+      
         $("#DeptIndex").hide();
         var id = this.Id();
-
+        var deptname = this.Department();
+        self.DeptEdit(deptname);
+      //  alert(id + deptname);
         $.ajax({
             type: 'GET',
             url: "/Department/GetEmployee/",
