@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link href="../Content/css/Site.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="../Content/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+    </head>
+    <body>
+     
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+
+                    </button>
+
+                    <a href="#/" class="navbar-brand">Home</a>
+                    <a href="#/EmployeeList/" class="navbar-brand">Employee</a>
+                    <a href="#/DepartmentList/" class="navbar-brand">Department</a>
+
+                </div>
+
+                <div class="nav-justified">
+                    <h4 id="loading" style="color:black"><span style="background-color: yellow"> Loading...</span></h4>
+                </div>
+
+                <div class="navbar-collapse collapse ">
+                    <ul class="nav navbar-nav"></ul>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="container body-content jumbotron" id="Home">
+            <div id="divhome">
+
+
+                <h2 style="color:blue"><u>Employee Management System</u></h2>
+                <p class="lead" style="color:chocolate">
+                    Employee management system makes it easy to check the details of Employees and Department.
+                </p>
+
+                <div>
+                    <p>First name: <strong data-bind="text: firstName"></strong></p>
+                    <p>First name: <input data-bind="value: firstName" /></p>
+                </div>
+                <div>
+                    <a href="#" data-bind="click: $root.Employee">Employee Detail</a>
+                </div>
+                <div>
+                    <a href="#" data-bind="click: $root.Department">Department Detail</a>
+
+                </div>
+            </div>
+            <!-- Employee Home page-->
+            <div id="EmpIndex" style="display:none">
+                <table class="table">
+                    <h2 style='color:blue'> Employee Details  </h2>
+                    <tr><td><a href="#">Home</a>|<a href="#" data-bind="click: AddDepartment">Create New</a></td></tr>
+                    <tr><td>Department</td></tr>
+                    <tbody data-bind="foreach: employee">
+                        <tr>
+                            <td> <span data-bind="text: Name,value:Id">Welcome</span> </td>
+                            <td> <span data-bind="text: Designation ,value:Id">Welcome</span> </td>
+                            <td> <span data-bind="text: Emailid ,value:Id">Welcome</span> </td>
+                            <td> <span data-bind="text: Contactno ,value:Id">Welcome</span> </td>
+                            <td><a href="#" data-bind="click: $root.UpdateDepartment,value:Id,value: Department">Edit</a></td>
+                            <td><a href="#" data-bind="click: $root.DepartmentDetails,value:Id">Detail</a></td>
+                            <td><a href="#" data-bind="click: $root.DeleteDepartment">Delete</a></td>
+                        <tr>
+                    </tbody>
+                </table>
+            </div>
+             
+                <!-- Department Home page-->
+                <div id="DeptIndex" style="display:none">
+                <table class="table">
+                <h2 style='color:blue'> Department Details  </h2> 
+                <tr><td><a href="#">Home</a>|<a href="#" data-bind="click: AddDepartment">Create New</a></td></tr>
+                 <tr><td>Department</td></tr>
+                <tbody data-bind="foreach: tasks"><tr>
+                           <td> <span data-bind="text: Department ,value:Id">Welcome</span> </td>
+                            <td><a href="#" data-bind="click: $root.UpdateDepartment,value:Id,value: Department">Edit</a></td>
+                            <td><a href="#" data-bind="click: $root.DepartmentDetails,value:Id">Detail</a></td>
+                            <td><a href="#" data-bind="click: $root.DeleteDepartment">Delete</a></td>
+               <tr> 
+               </tbody>
+               </table>
+               </div>
+                <!-- Create New Department-->
+                <div id="Deptcreate" style="display:none">
+                    <table class="table">
+                        <h2 style='color:blue'> Create new department </h2>
+                       
+                            <tr>
+                            <tr>
+                                <td>Department Name:</td>
+                                <td><input type="text" data-bind="value : DeptName,text:DeptName" placeholder="Enter department name "><div id="error" style="color:red"></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" data-bind="click: CreateDepartment" value="Create" class="btn btn-default"><input type="button" value="Create" class="btn btn-default">
+                                </td>
+                            </tr>
+                            
+                    </table>
+
+                </div>
+
+                <!-- Edit Department-->
+                <div id="Deptupdate" style="display:none">
+                    <table class="table">
+                        <h2 style='color:blue'> Update department </h2>
+                        <tbody>
+                            <tr>
+                            <tr>
+                                <td>Department Name:</td>
+                                <td><input data-bind="value : DeptEdit "><div id="UpdateError" style="color:red"></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" data-bind="click: EditDepartment" value="Update" class="btn btn-default"><input type="button" value="cancel" class="btn btn-default">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <!-- Detail Department-->
+                <div id="Deptdetail" style="display:none">
+                    <table class="table" cellpadding="10" cellspacing="20" id="deptdetailtable">
+                        <h2 style='color:blue'>Department Details </h2>
+                     <tr><td>Name</td><td>Designation</td><td>Emailid</td><td>Contactno</td></tr>
+                      </table>
+                    <div><a href="#" data-bind="click: $root.back">Back to List</a></div>
+                </div>
+
+                <!-- Detail not found Department-->
+                <div id="detailnotfound" style="display:none">
+                    <table class="table" cellpadding="10" cellspacing="20" id="datanotfound">
+                        <h2 style='color:blue'>Department Details </h2>
+                        <tr><td>No data found</td></tr>
+                        <tr><td><a href="#" data-bind="click: $root.Back">Back to List</a></td></tr>
+                    </table>
+
+                </div>
+
+
+            
+          
+            </div>
+            <script type="text/javascript" src="../Scripts/jquery-1.10.2.min.js"></script>
+            <script type="text/javascript" src="../Scripts/knockout-3.2.0.js"></script>
+
+            <script type="text/javascript" src="../Content/js/EmployeeKnockout.js"> </script>
+</body>
+
+    </html>

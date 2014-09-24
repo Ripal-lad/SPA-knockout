@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Empmanagement";
+}
+
+
+<div class="divhome jumbotron">
+
+   
+    <h2 style="color:blue"><u>Employee Management System</u></h2>
+    <p class="lead" style="color:chocolate">
+        Employee management system makes it easy to check the details of Employees and Department.
+    </p>
+    <div></div>
+    <div>
+        @Html.ActionLink("Employee Detail", "", "", new { href = "#/EmployeeList/", @class = "Employee" })
+    </div>
+    <div>
+        @Html.ActionLink("Department Detail", "", "", new { href = "#/DepartmentList/", @class = "Department" })
+    </div>
+
+</div>

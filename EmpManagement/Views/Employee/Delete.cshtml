@@ -1,0 +1,84 @@
+﻿@model EmpManagement.Models.Employee
+@{
+    ViewBag.Title = "Delete";
+    var x = ViewBag.DeptList;
+}
+
+@section JavaScript{
+    <script type="text/javascript" src="@Url.Content("~/Content/js/Empjquery.js")"></script>
+}
+
+    @using (Html.BeginForm())
+    {
+
+       
+         @Html.AntiForgeryToken();
+
+    <div class="jumbotron">
+        <table cellspacing="10" align="center" class="table" cellpadding="5" style="font-size:large">
+            <tr>
+                <th align="center" colspan="2">
+                    <h2 style="color:blue"> Are you sure you want to delete details of @Html.DisplayFor(model => model.Name)?</h2>
+                    <input type="submit" name="submit" value="yes" id="yes" class="btn btn-default" />
+                    <input type="submit" name="submit" value="no" id="no" class="btn btn-default" /> 
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Name)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Department
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.department.DName)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Emailid)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Emailid)
+                </td>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Designation)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Designation)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.ContactNo)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.ContactNo)
+                </td>
+            </tr>
+
+                      <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink("Back to List", "Index")
+                </td>
+            </tr>
+
+        </table>
+        </div>
+        }
+

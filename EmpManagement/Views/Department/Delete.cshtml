@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Delete";
+}
+@*
+    <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css">
+
+
+    <div class="jumbotron">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken();
+
+                <h2 style="color:blue"> Are you sure you want to delete department "@Html.DisplayFor(model => model.DName)"?</h2>
+                <input type="submit" value="Yes" id="yes" name="submit" class="btn btn-default" />
+                <input type="submit" value="No" id="no"name="submit" class="btn btn-default" />
+
+            <table cellspacing="10" align="center" class="table" cellpadding="5" style="font-size:large">
+                <tr>
+                    <td>
+                        Department:
+                    </td>
+
+                  <td>
+                        @Html.DisplayFor(model =>  model.DName)
+                </td>
+
+                </tr>
+
+                <tr>
+                    <td align="center"></td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = Model })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Back to List", "Index")
+                    </td>
+                </tr>
+
+
+    </table>
+        }
+    </div>
+
+
+*@
