@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <!-- Details of Employee-->
+    <div id="Empdetail" style="display:none">
+        <table class="table">
+            <h2 style='color:blue'> Create new department </h2>
+            <tr>
+            <tr>
+                <td>Name:</td>
+                <td data-bind="value :Name,text:DeptName"></td>
+            </tr>
+            <tr>
+                <td>Designation:</td>
+                <td>
+                <td data-bind="value : Designation,text:DeptName"></td>
+            </tr>
+
+            <tr>
+                <td>Emailid:</td>
+                <td data-bind="value : Emailid,text:DeptName"></td>
+            </tr>
+            <tr>
+                <td>ContactNo:</td>
+                <td data-bind="value : Contactno,text:DeptName"></td>
+            </tr>
+            <tr>
+                <td>Department:</td>
+                <td>
+                    <select id='select' data-bind="foreach: tasks ">
+                        <option data-bind="value : Department,text:Department ,value : Id"></option>
+                    </select> <div id="errordept" style="color:red"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#">Back to List</a>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</body>
+</html>

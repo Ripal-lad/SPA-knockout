@@ -141,7 +141,9 @@
     <Content Include="Content\Image\loading-icon.gif" />
     <Content Include="Content\Image\round-loading-icon.gif" />
     <Content Include="Content\js\demo1.js" />
+    <Content Include="Content\js\Demoknockout.js" />
     <Content Include="Content\js\EmployeeJquery.js" />
+    <Content Include="Content\js\EmployeeKnockout-1.js" />
     <Content Include="Content\js\EmployeeKnockout.js" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
@@ -646,6 +648,19 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Templates\Department\Create.html" />
+    <Content Include="Templates\Department\DepartmentNotFound.html" />
+    <Content Include="Templates\Department\Details.html" />
+    <Content Include="Templates\Department\Edit.html" />
+    <Content Include="Views\Department\Hello.html" />
+    <Content Include="Templates\Department\Index.html" />
+    <Content Include="Templates\Department\detailnotfound.html" />
+    <Content Include="Templates\Employee\Create.html" />
+    <Content Include="Templates\Employee\DeptNotFound.html" />
+    <Content Include="Templates\Employee\Details.html" />
+    <Content Include="Templates\Employee\Edit.html" />
+    <Content Include="Templates\Employee\EmployeeNotFound.html" />
+    <Content Include="Templates\Employee\Index.html" />
     <Content Include="Templates\Home\Index.html" />
     <Content Include="Templates\Index.html" />
     <Content Include="Web.config">
@@ -705,8 +720,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Templates\Department\" />
-    <Folder Include="Templates\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201409200642066_InitialCreate.resx">

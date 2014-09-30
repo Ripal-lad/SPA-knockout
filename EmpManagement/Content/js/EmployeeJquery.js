@@ -1167,6 +1167,7 @@
         //Back to department list
         this.get('#/BackToDeptList/', function (context) {
             context.log('Yo yo yo');
+           
             window.location.hash = "#/DepartmentList/";
         });
         

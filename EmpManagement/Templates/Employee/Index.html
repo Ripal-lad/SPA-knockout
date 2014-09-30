@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    
+    <div id="EmpIndex" >
+        <table class="table">
+            <h2 style='color:blue'> Employee Details  </h2>
+            <tr><td><a href="#">Home</a>|<a href="#/AddEmployee/0">Create New</a></td></tr>
+
+            <tr><td><b>Name</b></td><td><b>Designation</b></td><td><b>Emailid</b></td><td><b>Contactno</b></td></tr>
+            <tbody data-bind="foreach: tasks ">
+                <tr>
+                    <td> <span data-bind="text: Name"></span> </td>
+                    <td> <span data-bind="text: Designation"></span> </td>
+                    <td> <span data-bind="text: Emailid"></span> </td>
+                    <td> <span data-bind="text: Contactno"></span> </td>
+                    <td><a data-bind="attr: { href:EmpupdateUrl}">Edit</a></td>
+                    <td><a data-bind="attr: { href:EmpDetailUrl}">Detail</a></td>
+                    <td><a data-bind="attr: { href:EmpDeleteUrl}">Delete</a></td>
+                <tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

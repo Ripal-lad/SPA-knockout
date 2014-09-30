@@ -40,7 +40,7 @@ namespace EmpManagement.Controllers
 
         public ActionResult Details()
         {
-           // Thread.Sleep(2000);
+            // Thread.Sleep(2000);
             return View();
         }
 
@@ -72,24 +72,24 @@ namespace EmpManagement.Controllers
         //Create
         public ActionResult Create()
         {
-           // Thread.Sleep(2000);
-             return View();
+            // Thread.Sleep(2000);
+            return View();
         }
 
         // Post Empmanagement/Ecreate
         [HttpPost]
         public ActionResult Create(Department department)
         {
-           // Thread.Sleep(2000);
-                    db.Department.Add(department);
-                    db.SaveChanges();
+            // Thread.Sleep(2000);
+            db.Department.Add(department);
+            db.SaveChanges();
 
-                    return Json(department, JsonRequestBehavior.AllowGet);
+            return Json(department, JsonRequestBehavior.AllowGet);
         }
-        
+
         public ActionResult DeptAlreadyExist()
         {
-           // Thread.Sleep(2000);
+            // Thread.Sleep(2000);
             return View();
         }
 

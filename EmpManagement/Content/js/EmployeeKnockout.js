@@ -11,9 +11,13 @@ function Task(data) {
     this.Contactno = ko.observable(data.ContactNo);
     this.EmployeeId = ko.observable(data.ID);
     this.Deptid = ko.observable(data.DepartmentID);
+   // this.Selected = ko.observable(data.DName);
 
+    //alert("task");
+    //alert("select = " + this.Selected() + " || " + this.Id());
      //    this.isDone = ko.observable(data.isDone);
 }
+
 
 function AppViewModel() {
     alert("hello");
@@ -28,40 +32,63 @@ function AppViewModel() {
     this.Emailid = ko.observable("");
     this.Contactno = ko.observable("");
     this.EmployeeId = ko.observable("");
+    this.Department = ko.observable("");
     this.Deptid = ko.observable("");
+    this.Id = ko.observable("");
+  
     var self = this;
     self.tasks = ko.observableArray([]);            // Home page
-    
-    //Employee List.
-    this.Employee = function () {
-        alert("employee");
-        $("#divhome").hide();
-        $("#EmpIndex").show();
-        $.getJSON("/Employee/GetDepartment/", function (data) {  //check if department exist.
-            var ParsedData = JSON.parse(data);
-        //    alert(data);
-            if (data == 'serializedata') {
-            }
-            else {
-                $.getJSON("/Employee/LoadEmployee/", function (data) {  //retrieve data
+   
+    (function ($) {
+        alert("function");
 
-                    var ParsedData = JSON.parse(data);
-                   // alert("data = "+data);
-                    if (data == 'Nodatafound') {
-                        alert("nodata");
-                    } else {
-                       // alert("else");
-                        var mappedTasks = $.map(ParsedData, function (item) {
-                        return new Task(item);
-                    });
+        var app = $.sammy('#Home', function () {
+            this.get('#/', function (context) {
+                context.log('hi');
+                alert("sammy");
+                $("#divhome ").show();
+                //$("#home1").load('/Home/Empmanagement/', function (items) {
+                //  context.log('hello');
 
-                        self.tasks(mappedTasks);
-                }
                 });
-        }
-        });
-    }
+            
+            //Employee List.
+            this.get('#/EmployeeList/', function (context) {
+                alert("saamy emp")
+           //     this.Employee = function () {
+                    alert("employee");
+                    $("#divhome").hide();
+                    $("#EmpIndex").show();
+                    $.getJSON("/Employee/GetDepartment/", function (data) {  //check if department exist.
+                        var ParsedData = JSON.parse(data);
+                            alert(data);
+                        if (data == 'serializedata') {
+                            $("#NoDptFound").show();
+                            $("#EmpIndex").hide();
+                        }
+                        else {
+                            $.getJSON("/Employee/LoadEmployee/", function (data) {  //retrieve data
 
+                                var ParsedData = JSON.parse(data);
+                                alert("data = "+data);
+                                if (data == 'Nodatafound') {
+                                    alert("nodata");
+                                    $("#datanotfound").show();
+                                    $("#EmpIndex").hide();
+
+                                } else {
+                                     alert("else");
+                                        var mappedTasks = $.map(ParsedData, function (item) {
+                                        return new Task(item);
+                                    });
+
+                                    self.tasks(mappedTasks);
+                                }
+                            });
+                        }
+                    });
+               // }
+            });
     //Add employee.
     this.AddEmployee = function () {
         alert("add");
@@ -73,6 +100,7 @@ function AppViewModel() {
                 // alert("data undefined");
 
             } else {
+                alert(data);
                 var mappedTasks = $.map(ParsedData, function (item) {
                     return new Task(item);
                 });
@@ -104,6 +132,8 @@ function AppViewModel() {
         var emailid = this.Emailid();
         var contactno = this.Contactno();
         var department = $("#select option:selected").val();
+      //  var deptid = this.Id();
+        alert("department = "+department + " || " );
         alert(name + " || " + designation + " || " + emailid + " || " + contactno + " || " + department);
         // email validation
         if (emailid != "") {
@@ -164,8 +194,157 @@ function AppViewModel() {
             alert(flag);
          //   window.location.hash = "#/AddEmployee/";
         }
-        alert(flag);
+       
+        else {
+            alert(flag);
+                    $.ajax({
+                        type: 'Post',
+                        url: "/Employee/Create/",
+                        datatype: 'json',
+                        data: { "Name": "" + name + "", "Designation": "" + designation + "", "ContactNo": "" + contactno + "", "Emailid": "" + emailid + "", "DepartmentID": "" + department + "" },
+                        success: function (data) {
+                            console.log("Success");
+                            alert("Employee detail added successfuly.");
+                           // window.location.hash = "#/EmployeeList/";
+                           
+                        },
+                        error: function (xhr, status, errorThrown) {
 
+                            alert("error");
+                            console.log("Sorry, there was a problem!");
+                            console.log("Error: " + errorThrown);
+                            console.log("Status: " + status);
+                        },
+                    });
+    }
+
+    }
+
+
+    //Edit Employee view.
+    self.UpdateEmployee = function () {
+        $("#Empupdate").show();
+        $("#divhome").hide();
+        $("#EmpIndex").hide();
+        var id = this.EmployeeId();
+        var name = this.Name();
+        var designation = this.Designation();
+        var emailid = this.Emailid();
+        var contactno = this.Contactno();
+        var department = this.Deptid();//$("#select option:selected").val();
+       
+        var hello;
+        alert("update" + id + "deptid  = " + department );
+        alert(name + " || " + designation + " || " + emailid + " || " + contactno + " || " + department);
+        $.ajax({
+            type: 'GET',
+            url: "/Employee/GetEmployee/",
+            datatype: 'json',
+            data: { "ID": ""+id+"" },
+            success: function (data) {
+                 // alert("success" + data);
+                var empdata = JSON.parse(data);
+                $.ajax({
+                    type: 'GET',
+                    url: "/Employee/GetDepartment/",
+                    datatype: 'json',
+                    success: function (data) {
+                        // alert("2nd success" + data);
+
+                        var ParsedData = JSON.parse(data);
+                        var mappedTasks = $.map(ParsedData, function (item) {
+                           
+                                    return new Task(item);
+                              //      alert("aftr");
+                        });
+                        self.tasks(mappedTasks);
+                        //Selected = this.Selected();
+                         $.each((ParsedData), function (key, value) {
+                             var hi;
+                             var SelDepartmen;
+                             if (value.ID == department) {
+                                 var deptsel = value.DName;
+                                // alert(value.ID + " || " + department);
+                                 var mappedTasks = $.map(deptsel, function (item) {
+                                     alert("inside");
+                                     return new Selected(item);
+                                     //    ;
+                                 });
+                                 self.Selected(mappedTasks);
+                             }
+                             else {
+                                // alert(" else " + value.ID + " || " + department);
+                               
+                               //  select.append("<Option value = " + value.ID + " id='ddldept'>" + value.DName + "</Option>");
+                             }
+                         });
+                        //  self.tasks(mappedTasks);
+                         
+                         self.Name(name);
+                         self.Designation(designation);
+                         self.Emailid(emailid);
+                         self.Contactno(contactno);
+                     //    self.Selected(hello);
+                        // self.Department(department);
+                   
+                    },
+                    error: function (xhr, status, errorThrown, data) {
+                        console.log("Sorry, there was a problem!");
+                        console.log("Error: " + errorThrown);
+                        console.log("Status: " + status);
+                        // alert("error :" + " " + errorThrown + " " + "Status: " + " " + status + "data : " + data);
+                    }
+                });
+
+                    
+            },
+            error: function (xhr, status, errorThrown) {
+                console.log("Sorry, there was a problem!");
+                console.log("Error: " + errorThrown);
+                console.log("Status: " + status);
+                //  alert("error :" + " " + errorThrown + " " + "Status: " + " " + status);
+            }
+        });
+    }
+
+    //Details of Employee.
+    self.EmployeeDetails = function () {
+        alert("detail");
+        $("#Empdetail").show();
+        $("#EmpIndex").hide();
+      
+        var id = this.EmployeeId();
+        var name = this.Name();
+        var designation = this.Designation();
+        var emailid = this.Emailid();
+        var contactno = this.Contactno();
+        var deptid = this.Deptid();//$("#select option:selected").val();
+        var Deptname;
+        $.ajax({
+            type: 'GET',
+            url: "/Employee/GetDepartment/",
+            datatype: 'json',
+            success: function (data) {
+                // alert("dept success");
+                var department = JSON.parse(data);
+                //alert(data);
+                $.each(JSON.parse(data), function (key, value) {
+
+                    alert("dept id = " + value.ID + " empdeptid id = " + deptid);
+                    if (deptid == value.ID) {
+                        Deptname = value.DName;
+                        self.Department(Deptname);
+                         alert("deptname = "+Deptname);
+                    };
+                });
+            },
+        });
+   
+        self.Name(name);
+        self.Designation(designation);
+        self.Emailid(emailid);
+        self.Contactno(contactno);
+       
     }
 
     //Employeee delete
@@ -208,13 +387,19 @@ function AppViewModel() {
         alert("department");
         $("#DeptIndex").show();
         $("#divhome").hide();
-        $.getJSON("/Department/GetDepartment", function (allData) {
-            var ParsedData = JSON.parse(allData);
+        $.getJSON("/Department/GetDepartment", function (data) {
+            if (data == 'Nodatafound') { 
+                $("#Deptnotfound").show();
+                $("#DeptIndex").hide();
+            }
+            else { 
+            var ParsedData = JSON.parse(data);
             var mappedTasks = $.map(ParsedData, function (item) {
                 return new Task(item);
             });
 
             self.tasks(mappedTasks);
+        }
         });
 
     }
@@ -422,7 +607,7 @@ function AppViewModel() {
                             $("#UpdateError").html(value.DName + " already exist");
 
                             console.log("already exist " + value.DName);
-                           // window.location.hash = "#/EditDepartment/";
+                           //window.location.hash = "#/EditDepartment/";
                         }
                     });
                     if (flag) {
@@ -490,10 +675,10 @@ function AppViewModel() {
                     }
                 });
                 if (!flag) {
-                  
+                  //  alert(flag);
                  //   $("#home1").load('/Department/NoDataFound/', function (items) {
                     $("#Deptdetail").hide();
-                     $("#detailnotfound").show();
+                    $("#detailnotfound").show();
                       
                    // });
                 };
@@ -508,7 +693,15 @@ function AppViewModel() {
 
         });
     }
+        });
 
+
+        $(function () {
+            app.run('#/');
+        });
+
+
+    })(jQuery);
     
 
     }

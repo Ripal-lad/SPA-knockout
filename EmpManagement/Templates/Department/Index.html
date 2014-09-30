@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--<script src="../../Content/js/Demoknockout.js"></script>-->
+</head>
+<body>
+   
+    <div id="DeptIndex">
+        <table class="table">
+            <tr><td><h2 style='color:blue'> Department Details  </h2></tr></td>
+            <tr><td><a href="#">Home</a>|<a href="#/AddDepartment/0">Create New</a></td></tr>
+            <tr><td><b>Department</b></td></tr>
+
+            <tr data-bind="foreach: tasks">
+                <td>Hi</td>
+                <td><span data-bind="text: $data.DName"></span> </td>
+                <td><a data-bind="attr: { href : DeptUpdateUrl}">Edit</a></td>
+                <td><a data-bind="attr: { href : DeptDetailUrl}">Detail</a></td>
+                <td><a data-bind="attr: { href : DeptDeletelUrl}">Delete</a></td>
+
+            </tr>
+
+        </table>
+
+       
+    </div>
+</body>
+</html>

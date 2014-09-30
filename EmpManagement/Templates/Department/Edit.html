@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <!-- Edit Department-->
+    <div id="Deptupdate" style="display:none">
+
+        <table class="table">
+            <h2 style='color:blue'> Update department </h2>
+            <tbody>
+                <tr>
+                <tr>
+                    <td>Department Name:</td>
+                    <td><input data-bind="value : DeptEdit "><div id="UpdateError" style="color:red"></div></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" data-bind="click: EditDepartment" value="Update" class="btn btn-default"><input type="button" value="cancel" class="btn btn-default">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>

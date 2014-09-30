@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <!-- Create New Department-->
+    <div id="Deptcreate">
+        <table class="table">
+            <h2 style='color:blue'> Create new department </h2>
+
+            <tr>
+            <tr>
+                <td>Department Name:</td>
+                <td><input type="text" id="txtdept" data-bind="value : Department,text:Department" placeholder="Enter department name "><div id="error" style="color:red"></div></td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#/CreateDeparment/" class="btn btn-default">Create</a>
+                    <a href="#/CancelAddDept/" class="btn btn-default">Cancel</a>
+
+                </td>
+            </tr>
+            <tr><td><a href="#/BackToDeptList/">Back to List</a></td></tr>
+        </table>
+
+    </div>
+</body>
+</html>
