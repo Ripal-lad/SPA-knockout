@@ -18,16 +18,11 @@ function Task(data) {
     this.DeptDeletelUrl = ko.observable("#/DeleteDepartment/" + data.ID + "/" + data.DName);
     this.DeptUpdateUrl = ko.observable("#/UpdateDepartment/" + data.ID + "/" + data.DName);
     this.DeptCancelUpdate = ko.observable("#/CancelEdit/" + data.ID + "/" + data.DName);
-   // this.Selected = ko.observable(data.DName);
-
-    //alert("task");
-    //alert("select = " + this.Selected() + " || " + this.Id());
-     //    this.isDone = ko.observable(data.isDone);
+  
 }
 
-
 function AppViewModel() {
-    alert("hello");
+    //alert("hello");
    
     this.firstName = ko.observable("");
     this.DeptName = ko.observable("");  //Create
@@ -43,33 +38,47 @@ function AppViewModel() {
     this.Deptid = ko.observable("");
     this.Id = ko.observable("");
     this.DeptCancelUpdate = ko.observable("");
-
+   
     var self = this;
-    self.tasks = ko.observableArray([]);            // Home page
+    self.tasks = ko.observableArray([]);
+    self.dept = ko.observableArray([]);
+    self.Selected = ko.observableArray([1]);
+    self.departmentid = ko.observableArray([]);
+    // Home page
    
     (function ($) {
         //alert("function");
 
         var app = $.sammy('#Home', function () {
-          
-          
-            
 
+            $(document).ajaxStart(function () {
+                //  alert("ajax");
+                //  $("#loading").show();
+                $("#loading").css("display", "block");
+            });
+
+            $(document).ajaxComplete(function () {
+                // alert("hide");
+                //$("#loading").hide();
+                $("#loading").css("display", "none");
+            });
+       // home page.
       this.get('#/', function (context) {
                 context.log('hi');
            //     alert("sammy");
                 $("#divhome ").show();
-                $("#DeptIndex").hide();              
-                $("#EmpIndex").hide();
+                $("#DeptIndex").hide(); 
                 $("#Deptcreate").hide();
                 $("#Deptupdate").hide();
                 $("#Deptdetail").hide();
                 $("#detailnotfound").hide();
                 $("#Deptnotfound").hide();
+                $("#EmpIndex").hide();
                 $("#Empcreate").hide();
                 $("#Empupdate").hide();
-
-
+                $("#Empdetail").hide();
+                $("#NoDptFound").hide();
+                $("#datanotfound").hide();
                 //$("#home1").load('/Home/Empmanagement/', function (items) {
                 //  context.log('hello');
 
@@ -81,7 +90,6 @@ function AppViewModel() {
            //     this.Employee = function () {
                   //  alert("employee");
                     $("#divhome").hide();
-                    $("#EmpIndex").show();
                     $("#DeptIndex").hide();
                     $("#divhome").hide();
                     $("#Deptcreate").hide();
@@ -89,12 +97,13 @@ function AppViewModel() {
                     $("#Deptdetail").hide();
                     $("#detailnotfound").hide();
                     $("#Deptnotfound").hide();
+                    $("#EmpIndex").show();
                     $("#Empcreate").hide();
                     $("#Empupdate").hide();
                     $("#Empdetail").hide();
                     $("#NoDptFound").hide();
                     $("#datanotfound").hide();
-                  
+                    
                     $.getJSON("/Employee/GetDepartment/", function (data) {  //check if department exist.
                         var ParsedData = JSON.parse(data);
                            // alert(data);
@@ -126,10 +135,10 @@ function AppViewModel() {
                // }
       });
 
-            //Add employee.
+      //Add employee.
       this.get('#/AddEmployee/0', function (context) {
           //this.AddEmployee = function () {
-          alert("add");
+       //   alert("add");
          
           $("#EmpIndex").hide();
           $("#Empcreate").show();
@@ -150,10 +159,10 @@ function AppViewModel() {
           });
       });
 
-            //add employee into database.
+       //add employee into database.
       this.get('#/CreateEmployee/', function (data, context) {
           // this.CreateEmployee = function () {
-          alert("create");
+         // alert("create");
           var regexemail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
           var regexname = /^[A-Z]+[a-zA-Z''-'\s]*$/;
           var regdesignation = /^[A-Za-z- ]+$/;
@@ -176,7 +185,7 @@ function AppViewModel() {
           var department = $("#select option:selected").val();
           //  var deptid = this.Id();
      //     alert("department = " + department + " || ");
-          alert(name + " || " + designation + " || " + emailid + " || " + contactno + " || " + department);
+         // alert(name + " || " + designation + " || " + emailid + " || " + contactno + " || " + department);
           // email validation
           if (emailid != "") {
               if (!(emailid.match(regexemail))) {
@@ -238,7 +247,7 @@ function AppViewModel() {
           }
 
           else {
-              alert(flag);
+             // alert(flag);
               $.ajax({
                   type: 'Post',
                   url: "/Employee/Create/",
@@ -246,13 +255,13 @@ function AppViewModel() {
                   data: { "Name": "" + name + "", "Designation": "" + designation + "", "ContactNo": "" + contactno + "", "Emailid": "" + emailid + "", "DepartmentID": "" + department + "" },
                   success: function (data) {
                       console.log("Success");
-                      alert("Employee detail added successfuly.");
+                    //  alert("Employee detail added successfuly.");
                       window.location.hash = "#/EmployeeList/";
 
                   },
                   error: function (xhr, status, errorThrown) {
 
-                      alert("error");
+                    //  alert("error");
                       console.log("Sorry, there was a problem!");
                       console.log("Error: " + errorThrown);
                       console.log("Status: " + status);
@@ -262,93 +271,213 @@ function AppViewModel() {
 
       });
 
-
-            //Edit Employee view.
+        //Edit Employee view.
       this.get('#/UpdateEmployeeDetail/0/:id?/?:name?', function (context) {
-          self.UpdateEmployee = function () {
-              $("#Empupdate").show();
-              $("#divhome").hide();
-              $("#EmpIndex").hide();
-              var id = this.EmployeeId();
-              var name = this.Name();
-              var designation = this.Designation();
-              var emailid = this.Emailid();
-              var contactno = this.Contactno();
-              var department = this.Deptid();//$("#select option:selected").val();
-       
-              var hello;
-              alert("update" + id + "deptid  = " + department );
-              alert(name + " || " + designation + " || " + emailid + " || " + contactno + " || " + department);
+        //  self.UpdateEmployee = function () {
+          $("#Empupdate").show();
+          $("#divhome").hide();
+          $("#EmpIndex").hide();
+          
+          var id = context.params.id;
+          var name = context.params.name;
+        //  alert(id + "||" + name);
+          var dept;
+          $.ajax({
+              type: 'GET',
+              url: "/Employee/GetEmployee/",
+              datatype: 'json',
+              data: { "ID": "" + id + "" },
+              success: function (data) {
+                  //var flag = false;
+                  //  alert("success " + data);
+                  var empdata = JSON.parse(data);
+
+                  deptid = empdata.DepartmentID;
+                  self.Name(empdata.Name);
+                  self.Designation(empdata.Designation);
+                  self.Emailid(empdata.Emailid);
+                  self.Contactno(empdata.ContactNo);
+                  self.EmployeeId(id);
+                  $.ajax({
+                      type: 'GET',
+                      url: "/Employee/GetDepartment/",
+                      datatype: 'json',
+                      success: function (data) {
+                          //   alert("2nd success" + data);
+                             var ParsedData = JSON.parse(data);
+                           
+                             $.each(ParsedData, function (key,value) {
+                                 if (value.ID == deptid) {
+                                  
+                                     self.dept.push(value.DName);
+                                     self.Selected.push(value.DName);
+                                     self.departmentid.push(value.ID);
+                                 }
+                                 else {
+                                     self.departmentid.push(value.ID);
+                                     self.dept.push(value.DName);
+                                 }
+                             })
+                      },
+
+                      error: function (xhr, status, errorThrown, data) {
+                          console.log("Sorry, there was a problem!");
+                          console.log("Error: " + errorThrown);
+                          console.log("Status: " + status);
+                        //  alert("error :" + " " + errorThrown + " " + "Status: " + " " + status + "data : " + data);
+                      }
+                  });
+
+
+              },
+              error: function (xhr, status, errorThrown) {
+                  console.log("Sorry, there was a problem!");
+                  console.log("Error: " + errorThrown);
+                  console.log("Status: " + status);
+                 // alert("error :" + " " + errorThrown + " " + "Status: " + " " + status);
+              },
+                
+          });
+         
+      });
+
+      //Update department.
+      this.get('#/EditEmployeeDetail/', function (context) {
+         // alert("update");
+          var regexemail = /[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+          var regexname = /^[A-Z]+[a-zA-Z''-'\s]*$/;
+          var regdesignation = /^[A-Za-z- ]+$/;
+          $("#errorname1").html("");
+          $("#errordept1").html("");
+          $("#erroremailid1").html("");
+          $("#errorcontactno1").html("");
+          $("#errordesignation1").html("");
+          $("#errorname1").show();
+          $("#errordesignation1").show();
+          $("#erroremailid1").show();
+          $("#errorcontactno1").show();
+          $("#errordept1").show();
+
+          var id = self.EmployeeId();
+       //   alert(id);
+          var flag = false;
+          var name = self.Name();
+          var designation = self.Designation();
+          var emailid = self.Emailid();
+          var contactno = self.Contactno();
+          var department = $("#selected option:selected").val();
+          var Deptid;
+         // alert(id+" || "+name + " || " + designation + " || " + emailid + " || " + contactno + " || " + department);
+          // email validation
+          if (emailid != "") {
+              if (!(emailid.match(regexemail))) {
+                  $("#erroremailid1").html("Invalid Email-id");
+                 // alert("inside match else");
+                  flag = true;
+              }
+          }
+          else {
+              flag = true;
+              $("#erroremailid1").html("This field is required.");
+            //  alert("email");
+          }
+
+          //name validation
+          if (name != "") {
+              // alert("name = " + name);
+              if (!(name.match(regexname))) {
+                  flag = true;
+                  $("#errorname1").html("Invalid name.");
+                 // alert("name");
+              }
+          }
+          else {
+              flag = true;
+              $("#errorname1").html("This field is required.");
+             // alert("name");
+          }
+
+          // Designation Validation       
+          if (designation != "") {
+              if (!(designation.match(regdesignation))) {
+                  flag = true;
+                  $("#errordesignation1").html("Text only.");
+
+              }
+          }
+          else {
+              flag = true;
+              $("#errordesignation1").html("This field is required.");
+
+          }
+          //department validation
+          if (department == "") {
+              flag = true;
+              $("#errordept1").html("This field is required.");
+          }
+
+          //contactno validation
+          if (contactno == "") {
+              flag = true;
+              $("#errorcontactno1").html("This field is required.");
+
+          }
+
+          if (flag == true) {
+              //alert(flag);
+              window.location.hash = '#/UpdateEmployeeDetail/';
+          }
+
+          else {
+             // alert(flag);
               $.ajax({
                   type: 'GET',
-                  url: "/Employee/GetEmployee/",
+                  url: "/Employee/GetDepartment/",
                   datatype: 'json',
-                  data: { "ID": ""+id+"" },
                   success: function (data) {
-                      // alert("success" + data);
-                      var empdata = JSON.parse(data);
-                      $.ajax({
-                          type: 'GET',
-                          url: "/Employee/GetDepartment/",
-                          datatype: 'json',
-                          success: function (data) {
-                              // alert("2nd success" + data);
+                      // alert("dept success");
 
-                              var ParsedData = JSON.parse(data);
-                              var mappedTasks = $.map(ParsedData, function (item) {
-                           
-                                  return new Task(item);
-                                  //      alert("aftr");
-                              });
-                              self.tasks(mappedTasks);
-                              //Selected = this.Selected();
-                              $.each((ParsedData), function (key, value) {
-                                  var hi;
-                                  var SelDepartmen;
-                                  if (value.ID == department) {
-                                      var deptsel = value.DName;
-                                      // alert(value.ID + " || " + department);
-                                      var mappedTasks = $.map(deptsel, function (item) {
-                                          alert("inside");
-                                          return new Selected(item);
-                                          //    ;
-                                      });
-                                      self.Selected(mappedTasks);
-                                  }
-                                  else {
-                                      // alert(" else " + value.ID + " || " + department);
-                               
-                                      //  select.append("<Option value = " + value.ID + " id='ddldept'>" + value.DName + "</Option>");
-                                  }
-                              });
-                              //  self.tasks(mappedTasks);
-                         
-                              self.Name(name);
-                              self.Designation(designation);
-                              self.Emailid(emailid);
-                              self.Contactno(contactno);
-                              //    self.Selected(hello);
-                              // self.Department(department);
-                   
-                          },
-                          error: function (xhr, status, errorThrown, data) {
-                              console.log("Sorry, there was a problem!");
-                              console.log("Error: " + errorThrown);
-                              console.log("Status: " + status);
-                              // alert("error :" + " " + errorThrown + " " + "Status: " + " " + status + "data : " + data);
-                          }
+                      $.each(JSON.parse(data), function (key, value) {
+
+                          //  alert("dept id = " + value.ID + " empdeptid id = " + deptid);
+                          if (department == value.DName) {
+                              Deptid = value.ID;
+                            //   alert("deptname = "+value.DName+" || "+value.ID);
+                          };
                       });
+                
+              $.ajax({
+                  type: 'Post',
+                  url: "/Employee/Edit/",
+                  datatype: 'json',
+                  data: { "ID": "" + id + "", "Name": "" + name + "", "Designation": "" + designation + "", "ContactNo": "" + contactno + "", "Emailid": "" + emailid + "", "DepartmentID": "" + Deptid + "" },
+                  success: function (data) {
+                      console.log("Success");
+                     // alert("Employee detail added successfuly.");
+                      window.location.hash = "#/EmployeeList/";
 
-                    
                   },
                   error: function (xhr, status, errorThrown) {
+
+                   //   alert("error1");
                       console.log("Sorry, there was a problem!");
                       console.log("Error: " + errorThrown);
                       console.log("Status: " + status);
-                      //  alert("error :" + " " + errorThrown + " " + "Status: " + " " + status);
-                  }
+                  },
               });
-          });
+                  },
+                  error: function (xhr, status, errorThrown) {
+
+                   //   alert("error");
+                      console.log("Sorry, there was a problem!");
+                      console.log("Error: " + errorThrown);
+                      console.log("Status: " + status);
+                  },
+              });
+
+          }
+
+      });
 
     //Details of Employee.
     this.get('#/EmployeeDetail/:id?/?:name?', function (context) {
@@ -407,9 +536,9 @@ function AppViewModel() {
     this.get('#/DeleteEmployee/:id?/?:name?', function (context) {
         //  self.DeleteEmployee = function (data) {
 
-        alert("delete");
+     //   alert("delete");
         var id = context.params.id;
-        alert(id);
+       // alert(id);
         if (confirm("Are you sure that you want to delete details of " + name + " ?")) {
           //  self.tasks.remove(data);
             $.ajax({
@@ -426,7 +555,7 @@ function AppViewModel() {
                 },
                 error: function (xhr, status, errorThrown) {
 
-                    alert("error");
+                    //alert("error");
                     console.log("Sorry, there was a problem!");
                     console.log("Error: " + errorThrown);
                     console.log("Status: " + status);
@@ -443,7 +572,7 @@ function AppViewModel() {
     //Cancel Add department.
     this.get('#/CancelAddEmployee/', function (context) {
         context.log('Yo yo yo');
-        alert("hello");
+        //alert("hello");
         $("#errorname").hide();
         $("#errordesignation").hide();
         $("#erroremailid").hide();
@@ -457,20 +586,42 @@ function AppViewModel() {
         window.location.hash = '#/AddEmployee/0';
     });
 
+   //Cancel Update department.
+    this.get('#/CancelUpdateEmployee/', function (context) {
+        context.log('Yo yo yo');
+      //  alert("hello");
+        $("#errorname1").hide();
+        $("#errordesignation1").hide();
+        $("#erroremailid1").hide();
+        $("#errorcontactno1").hide();
+        $("#errordept1").hide();
+        var id = self.EmployeeId();
+        var name = self.Name();
+        self.dept([]);
+        window.location.hash = '#/UpdateEmployeeDetail/0/'+id+'/'+name+'';
+    });
+
     
     //Back to employee List
     this.get('#/BackToEmpList/', function (context) {
         context.log('Yo yo yo');
+        //dept.observableArray(['']);
         $("#errorname").hide();
         $("#errordesignation").hide();
         $("#erroremailid").hide();
         $("#errorcontactno").hide();
         $("#errordept").hide();
+        $("#errorname1").hide();
+        $("#errordesignation1").hide();
+        $("#erroremailid1").hide();
+        $("#errorcontactno1").hide();
+        $("#errordept1").hide();
         self.Name('');
         self.Designation('');
         self.Emailid('');
         self.Contactno('');
         self.Department('');
+        self.dept([]);
         $("#Empcreate").hide();
         $("#Empupdate").hide();
         $("#Empdetail").hide();
@@ -480,18 +631,22 @@ function AppViewModel() {
     });
 
     this.get('#/DepartmentList/', function (context) {
-       alert("saamy emp")
+     //  alert("saamy emp")
         //this.DepartmentDetail = function () {
      //   alert("department");
        $("#DeptIndex").show();
         $("#divhome").hide();
-        $("#EmpIndex").hide();
         $("#Deptcreate").hide();
         $("#Deptupdate").hide();
         $("#Deptdetail").hide();
         $("#detailnotfound").hide();
         $("#Deptnotfound").hide();
+        $("#EmpIndex").hide();
         $("#Empcreate").hide();
+        $("#Empupdate").hide();
+        $("#Empdetail").hide();
+        $("#NoDptFound").hide();
+        $("#datanotfound").hide();
         //$("#Empupdate").hide();
         $.getJSON("/Department/GetDepartment", function (data) {
           //  alert(data);
@@ -513,12 +668,7 @@ function AppViewModel() {
         });
 
     });
-    this.capitalizeLastName = function () {
-        alert("Hello");
-        var currentVal = this.firstName();        // Read the current value
-        this.firstName(currentVal.toUpperCase()); // Write back a modified value
-    };
-
+   
     //Retrieve data for home page.
     this.get('#/DeleteDepartment/:id?/?:name?', function (context) {
         var id = context.params.id;
@@ -537,7 +687,7 @@ function AppViewModel() {
 
                     console.log("Success");
                     console.log(deptdata.DName + " is deleted sucessfuly ");
-                    alert(deptdata.DName + " is deleted successfully ");
+                //    alert(deptdata.DName + " is deleted successfully ");
                     //  window.location.hash = "#/DepartmentList/";
                     $.ajax({
                         type: 'GET',
@@ -570,7 +720,7 @@ function AppViewModel() {
                                         },
                                         error: function (xhr, status, errorThrown) {
 
-                                             alert("error");
+                                           //  alert("error");
                                             console.log("Sorry, there was a problem!");
                                             console.log("Error: " + errorThrown);
                                             console.log("Status: " + status);
@@ -604,7 +754,7 @@ function AppViewModel() {
     // add department view
     this.get('#/AddDepartment/0', function (context) {
         //self.AddDepartment = function () {
-        alert("add");
+      //  alert("add");
         $("#divhome").hide();
         $("#Deptcreate").show();
         $("#DeptIndex").hide();
@@ -613,10 +763,10 @@ function AppViewModel() {
     //add department into database.
     this.get('#/CreateDeparment/', function (context, data) {
         //   self.CreateDepartment = function () {
-        alert("create");
+       // alert("create");
 
        var DepartmentName = self.DeptName();
-         alert(DepartmentName);
+       //  alert(DepartmentName);
          $("#error").html("");
          $("#error").show();
         if (DepartmentName == "") {
@@ -666,7 +816,7 @@ function AppViewModel() {
                             },
                             error: function (xhr, status, errorThrown) {
 
-                                alert("error");
+                             //   alert("error");
                                 console.log("Sorry, there was a problem!");
                                 console.log("Error: " + errorThrown);
                                 console.log("Status: " + status);
@@ -679,7 +829,7 @@ function AppViewModel() {
                     console.log("Sorry, there was a problem!");
                     console.log("Error: " + errorThrown);
                     console.log("Status: " + status);
-                    alert("error :" + " " + errorThrown + " " + "Status: " + " " + status + "data : " + data);
+                  //  alert("error :" + " " + errorThrown + " " + "Status: " + " " + status + "data : " + data);
                 }
             });
         }
@@ -693,11 +843,27 @@ function AppViewModel() {
             $("#divhome").hide();         
             $("#DeptIndex").hide();
             $("#Deptupdate").show();
-            var deptname = context.params.name;
+            //var deptname = context.params.name;
             var id = context.params.id;
-            //var deptname = self.Department();
-            //var id = self.Id();
-           // alert(id + deptname);
+            var deptname;
+            $.ajax({
+                type: 'GET',
+                url: "/Department/GetDepartment/",
+                datatype: 'json',
+                data: { "ID": "" + id + "" },
+                success: function (data) {
+                   //  alert("success");
+                    console.log("success" + "data = " + data);
+
+                    $.each((JSON.parse(data)), function (key, value) {
+                        //  alert(id + " " + value.ID);
+                        if (id == (value.ID)) {
+                            deptname = value.DName;
+                            self.Department(value.DName);
+                        }
+                    });
+                },
+            });
             self.Department(deptname);
             self.DepteditId(id);
           
@@ -755,7 +921,7 @@ function AppViewModel() {
                                 window.location.hash = "#/DepartmentList/";
                             },
                             error: function (xhr, status, errorThrown) {
-                                alert("error");
+                             //   alert("error");
                                 console.log("Sorry, there was a problem!");
                                 console.log("Error: " + errorThrown);
                                 console.log("Status: " + status);
@@ -812,19 +978,20 @@ function AppViewModel() {
    
     //Cancel add department.
     this.get('#/CancelAddDept/', function (context) {
-       alert('Yo yo yo');
+      // alert('Yo yo yo');
        $("#error").hide();
        self.DeptName('');
         window.location.hash = '#/AddDepartment/0';
     });
 
    //cancel event for Upadte department
-    this.get('#/CancelEdit/:id?/?:name?', function (context) {
-        alert('Yo yo yo');
+    this.get('#/CancelEdit/', function (context) {
+        //alert('Yo yo yo');
         $("#UpdateError").hide();
-        $("#txtdept").value = "";
-        var id = context.params.id;
-        var deptname = context.params.name;
+       
+        var id = self.DepteditId();
+        var deptname = self.Department();
+       // alert(id + deptname);
         window.location.hash = '#/UpdateDepartment/' + id + '/' + deptname + '';
     });
 
@@ -837,14 +1004,16 @@ function AppViewModel() {
         $("#Deptdetail").hide();
         $("#detailnotfound").hide();
         $("#Deptnotfound").hide();
+        $("#UpdateError").hide();
         self.DeptName('');
         window.location.hash = "#/DepartmentList/";
     });
+
+    this.get('#/UpdateEmployeeDetail/', function () {
+      
         });
-
-
-
-
+       
+     });
         $(function () {
             app.run('#/');
         });

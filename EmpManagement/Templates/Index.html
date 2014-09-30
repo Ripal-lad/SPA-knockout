@@ -11,7 +11,8 @@
         
             <div class="navbar navbar-inverse navbar-fixed-top">
                 <div class="container">
-                    <div class="navbar-header">
+                 
+                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -22,11 +23,11 @@
                         <a href="#/" class="navbar-brand">Home</a>
                         <a href="#/EmployeeList/" class="navbar-brand">Employee</a>
                         <a href="#/DepartmentList/" class="navbar-brand">Department</a>
-
+                        
                     </div>
-
-                    <div class="nav-justified">
-                        <h4 id="loading" style="color:black"><span style="background-color: yellow"> Loading...</span></h4>
+                    
+                    <div class="container body-content" style="text-align:center">
+                        <h4 id="loading" style="color:black;display:none"><span style="background-color: yellow"> Loading...</span></h4>
                     </div>
 
                     <div class="navbar-collapse collapse ">
@@ -59,7 +60,7 @@
                 <div id="EmpIndex" style="display:none">
                     <table class="table">
                         <h2 style='color:blue'> Employee Details  </h2>
-                       <tr><td><a href="#">Home</a>|<a href="#/AddEmployee/0" >Create New</a></td></tr>
+                       <tr><td><a href="#/">Home</a>|<a href="#/AddEmployee/0" >Create New</a></td></tr>
 
                         <tr><td><b>Name</b></td><td><b>Designation</b></td><td><b>Emailid</b></td><td><b>Contactno</b></td></tr>
                         <tbody data-bind="foreach: tasks ">
@@ -79,7 +80,7 @@
                 <!-- Add Employee-->
                 <div id="Empcreate" style="display:none">
                     <table class="table">
-                        <h2 style='color:blue'> Create new department </h2>
+                        <h2 style='color:blue'> Create Employee </h2>
                         <tr>
                         <tr>
                             <td>Name:</td>
@@ -125,35 +126,42 @@
                 <!-- Update emloyee detail-->
                 <div id="Empupdate" style="display:none">
                     <table class="table">
-                        <h2 style='color:blue'> Update employee detail </h2>
-                        <tr>
+
+                        <tr><td><h2 style='color:blue'> Update details of <span data-bind="text :Name"> </span></h2></td></tr>
+                           <tr>
+                            <td><input type="hidden" data-bind="value :EmployeeId" id="txtid"></td>
+                        </tr>
                         <tr>
                             <td>Name:</td>
-                            <td><input type="text" data-bind="value :Name" placeholder="Enter name "><div id="errorname" style="color:red"></div></td>
+                            <td><input type="text" data-bind="value :Name" placeholder="Enter name "><div id="errorname1" style="color:red"></div></td>
                         </tr>
                         <tr>
                             <td>Designation:</td>
-                            <td><input type="text" data-bind="value : Designation" placeholder="Enter designation "><div id="errordesignation" style="color:red"></div></td>
+                            <td><input type="text" data-bind="value : Designation" placeholder="Enter designation "><div id="errordesignation1" style="color:red"></div></td>
                         </tr>
 
                         <tr>
                             <td>Emailid:</td>
-                            <td><input type="text" data-bind="value : Emailid" placeholder="Enter Emailid "><div id="erroremailid" style="color:red"></div></td>
-                        </tr>
+                            <td><input type="text" data-bind="value : Emailid" placeholder="Enter Emailid "><div id="erroremailid1" style="color:red"></div></td>
+                        </tr>            
                         <tr>
                             <td>ContactNo:</td>
-                            <td><input type="text" data-bind="value : Contactno" placeholder="Enter ContactNo "><div id="errorcontactno" style="color:red"></div></td>
+                            <td><input type="text" data-bind="value : Contactno" placeholder="Enter ContactNo "><div id="errorcontactno1" style="color:red"></div></td>
                         </tr>
                         <tr>
                             <td>Department:</td>
                             <td>
-                                <select id='select' data-bind="options:tasks"></select> <div id="errordept" style="color:red"></div>
+                                <select id='selected' data-bind="options: dept,selectedOptions:Selected"></select> <div id="errordept1" style="color:red"></div>
                             </td>
                         </tr>
                         <tr>
                             <td><a href="#/EditEmployeeDetail/" class="btn btn-default">Update</a>
-                                <a href="#/AddEmployee/0" class="btn btn-default">Cancel</a>
+                                <a href="#/CancelUpdateEmployee/" class="btn btn-default">Cancel</a>
                          
+                            </td>
+                        </tr><tr>
+                            <td>
+                                  <a href="#/BackToEmpList/">Back to List</a>
                             </td>
                         </tr>
                     </table>
@@ -163,17 +171,20 @@
                 <!-- Details of Employee-->
                 <div id="Empdetail" style="display:none">
                     <table class="table">
-                        <h2 style='color:blue'>Details of Employee. </h2>
+                        <h2 style='color:blue'>Details of <span data-bind="text :Name"> </span> </h2>
                         <tr>
                         <tr>
                             <td>Name:</td>
-                            <td data-bind="text :Name , value :Name"></td>
+                            <td data-bind="text :Name"></td>
                         </tr>
                         <tr>
                             <td>Designation:</td>
                             <td data-bind="text : Designation"></td>
                         </tr>
-
+                        <tr>
+                            <td>Department:</td>
+                            <td data-bind="text : Department"></td>
+                        </tr>
                         <tr>
                             <td>Emailid:</td>
                             <td data-bind="text : Emailid"></td>
@@ -182,10 +193,7 @@
                             <td>ContactNo:</td>
                             <td data-bind="text : Contactno"></td>
                         </tr>
-                        <tr>
-                            <td>Department:</td>
-                            <td data-bind="text : Department"></td>
-                        </tr>
+                        
                         <tr>
                             <td>
                                 <a href="#/BackToEmpList/">Back to List</a>
@@ -262,7 +270,10 @@
                     <table class="table">
                         <h2 style='color:blue'> Update department </h2>
                         <tbody>
+                            
                             <tr>
+                                 <td><input type="hidden" data-bind="value:DepteditId"></td>
+                            </tr>
                             <tr>
                                 <td>Department Name:</td>
                                 <td><input id='txtdept' data-bind="text: Department ,value:Department"><div id="UpdateError" style="color:red"></div></td>
@@ -270,7 +281,7 @@
                             <tr>
                                 <td>
                                     <a href="#/EditDepartment/0" class="btn btn-default">Update</a>
-                                    <a data-bind="attr: { href : DeptCancelUpdate}" class=" btn btn-default">Cancel</a>
+                                    <a href="#/CancelEdit/" class=" btn btn-default">Cancel</a>
                                 </td>
                             </tr>
                             <tr><td><a href="#/BackToDeptList/">Back to List</a></td></tr>
@@ -318,7 +329,7 @@
 
                 </div>
                    
-                    -->
+                   
             </div>
             <script type="text/javascript" src="../Scripts/jquery-1.10.2.min.js"></script>
             <script type="text/javascript" src="../Scripts/knockout-3.2.0.js"></script>

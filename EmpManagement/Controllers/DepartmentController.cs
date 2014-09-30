@@ -17,14 +17,14 @@ namespace EmpManagement.Controllers
         private EmpContext db = new EmpContext();
        
         // display the home page of the department
-        public ActionResult Index()
-        {
-            //Thread.Sleep(2000);
-            var department = from m in db.Department
-                             select m;
+        //public ActionResult Index()
+        //{
+        //    //Thread.Sleep(2000);
+        //    var department = from m in db.Department
+        //                     select m;
 
-            return View(department);
-        }
+        //    return View(department);
+        //}
 
         // to get the detail of the department.
         [HttpGet]
@@ -38,11 +38,11 @@ namespace EmpManagement.Controllers
             return Json(serializedata, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Details()
-        {
-            // Thread.Sleep(2000);
-            return View();
-        }
+        //public ActionResult Details()
+        //{
+        //    // Thread.Sleep(2000);
+        //    return View();
+        //}
 
         //get data for dept details.
         [HttpGet]
@@ -70,15 +70,15 @@ namespace EmpManagement.Controllers
         }
 
         //Create
-        public ActionResult Create()
-        {
-            // Thread.Sleep(2000);
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    // Thread.Sleep(2000);
+        //    return View();
+        //}
 
         // Post Empmanagement/Ecreate
         [HttpPost]
-        public ActionResult Create(Department department)
+        public JsonResult Create(Department department)
         {
             // Thread.Sleep(2000);
             db.Department.Add(department);
@@ -87,23 +87,23 @@ namespace EmpManagement.Controllers
             return Json(department, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult DeptAlreadyExist()
-        {
-            // Thread.Sleep(2000);
-            return View();
-        }
+        //public ActionResult DeptAlreadyExist()
+        //{
+        //    // Thread.Sleep(2000);
+        //    return View();
+        //}
 
-        public ActionResult Edit()
-        {
-            //Thread.Sleep(2000);
-            return View();
-        }
+        //public ActionResult Edit()
+        //{
+        //    //Thread.Sleep(2000);
+        //    return View();
+        //}
 
 
         // It will Update data in entitty.
         [HttpPost]
       //  [ValidateAntiForgeryToken]
-        public ActionResult Edit(Department department)
+        public JsonResult Edit(Department department)
         {
             //Thread.Sleep(2000);
                 db.Entry(department).State = EntityState.Modified;
@@ -134,11 +134,11 @@ namespace EmpManagement.Controllers
             return Json("Nodatafound", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult NoDataFound()
-        {
-            //Thread.Sleep(2000);
-            return View();
-        }
+        //public ActionResult NoDataFound()
+        //{
+        //    //Thread.Sleep(2000);
+        //    return View();
+        //}
 
         //Delete
         //[HttpDelete]
