@@ -36,7 +36,7 @@ namespace EmpManagement.Controllers
                 }
 
             var serializedata = JsonConvert.SerializeObject(employeeList);
-            //Thread.Sleep(2000);
+           // Thread.Sleep(1000);
                 return Json(serializedata, JsonRequestBehavior.AllowGet);
         }
 
@@ -56,7 +56,7 @@ namespace EmpManagement.Controllers
             db.Employee.Add(employee);
             db.SaveChanges();
 
-           // Thread.Sleep(2000);
+            //Thread.Sleep(2000);
             return Json(employee, JsonRequestBehavior.AllowGet);
         }
 
@@ -71,7 +71,7 @@ namespace EmpManagement.Controllers
                 return Json("NoDataFound", JsonRequestBehavior.AllowGet);
             }
             var serializedata = JsonConvert.SerializeObject(DeptList);
-           // Thread.Sleep(2000);
+           //Thread.Sleep(2000);
             return Json(serializedata, JsonRequestBehavior.AllowGet);
 
         }
@@ -106,7 +106,7 @@ namespace EmpManagement.Controllers
         {
             var Employeedata = db.Employee.Find(id);
             var serializedata = JsonConvert.SerializeObject(Employeedata);
-          //  Thread.Sleep(2000);
+           //Thread.Sleep(2000);
             return Json(serializedata, JsonRequestBehavior.AllowGet);
           
         }
@@ -123,7 +123,7 @@ namespace EmpManagement.Controllers
             
             db.Entry(employee).State = EntityState.Modified;
             db.SaveChanges();
-           // Thread.Sleep(2000);
+          //  Thread.Sleep(2000);
             return Json(employee, JsonRequestBehavior.AllowGet);
         }
         //Delete
@@ -136,7 +136,7 @@ namespace EmpManagement.Controllers
             db.SaveChanges();
 
             var serializedata = JsonConvert.SerializeObject(Employeedata);
-            //Thread.Sleep(2000);
+           // Thread.Sleep(2000);
             return Json(serializedata, JsonRequestBehavior.AllowGet);
            
         }

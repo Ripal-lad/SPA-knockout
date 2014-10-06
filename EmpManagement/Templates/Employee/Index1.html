@@ -1,0 +1,24 @@
+﻿    
+    <div id="EmpIndex">
+      
+        <table class="table">
+            <tr><td> <h2 style='color:blue'> Employee Details  </h2></td></tr>
+            <tr><td><a href="#/">Home</a>|<a href="#/AddEmployee/0">Create New</a></td></tr>
+            <tr><td colspan="4"><pre data-bind="text: JSON.stringify(ko.toJS($data), null, 3)"></pre></td></tr>
+            <tr><td><b>Name</b></td><td><b>Designation</b></td><td><b>Emailid</b></td><td><b>Contactno</b></td></tr>
+         
+            <tr data-bind="foreach:tasks ">
+
+                <td> <span data-bind="text: Name"></span> </td>
+                <td> <span data-bind="text: Designation"></span> </td>
+                <td> <span data-bind="text: Emailid"></span> </td>
+                <td> <span data-bind="text: Contactno"></span> </td>
+                <td><a data-bind="attr: { href:EmpupdateUrl}">Edit</a></td>
+                <td><a data-bind="attr: { href:EmpDetailUrl}">Detail</a></td>
+                <td><a data-bind="attr: { href:EmpDeleteUrl}">Delete</a></td>
+
+            </tr>
+        </table>
+    </div>
+
+    
