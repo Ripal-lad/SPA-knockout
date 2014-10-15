@@ -21,13 +21,13 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
         this.DeptCancelUpdate = ko.observable("#/CancelEdit/" + data.ID + "/" + data.DName);
 
     }
-  //  alert("viewmodel");
+ 
     return function appViewModel() {
-     //  alert("appviewmodel");
-        this.DeptName = ko.observable("");  //Create
-        this.DeptEdit = ko.observable(""); // Edit Name
-        this.DepteditId = ko.observable("");// Edit Id
-        this.DeptDetail = ko.observable("");//Detail
+   
+        //this.DeptName = ko.observable("");  //Create
+        //this.DeptEdit = ko.observable(""); // Edit Name
+        //this.DepteditId = ko.observable("");// Edit Id
+        //this.DeptDetail = ko.observable("");//Detail
         this.Name = ko.observable("");
         this.Designation = ko.observable("");
         this.Emailid = ko.observable("");
@@ -36,37 +36,36 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
         this.Department = ko.observable("");
         this.Deptid = ko.observable("");
         this.Id = ko.observable("");
-        this.DeptCancelUpdate = ko.observable("");
-
+     
         var self = this;
         self.tasks = ko.observableArray([]);
         self.dept = ko.observableArray([]);
         self.Selected = ko.observableArray([1]);
         self.departmentid = ko.observableArray([]);
-
-          (function ($) {
-           //   alert("function");
-
+        var emp;
+        (function ($) {
               var app = sammy('#Home', function () {
-                  //alert("sammy");
-
+               
                   //Home page.
                   this.get('#/', function (context) {
                       context.log('hi');
                       
-                      $("#Home").load('/Templates/Home/Index1.html', function (items) {
+                      $("#Home").load('/Templates/Home/Index.html', function (items) {
                          // alert("#");
                       })
                     
                   });
+
                   //Employee list
                   this.get('#/EmployeeList/', function (context) {
-                      $("#Home").load('/Templates/Employee/Index1.html', function (items) {
-                        //  alert("emp");
-
+                      
+                     $("#Home").load('/Templates/Employee/Index.html', function (items) {
+                          alert("emp");
+                     // require(["text!/Templates/Employee/Index.html"],
+                       //     function (module, html, css) {
                           $.getJSON("/Employee/GetDepartment/", function (data) {  //check if department exist.
                               var ParsedData = JSON.parse(data);
-                           //   alert(data);
+                             alert(data);
                               if (data == 'serializedata') {
                                   //$("#NoDptFound").show();
                                   //$("#EmpIndex").hide();
@@ -75,25 +74,31 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
                                   $.getJSON("/Employee/LoadEmployee/", function (data) {  //retrieve data
 
                                       var ParsedData = JSON.parse(data);
-                                   //   alert("data = "+data);
+                              
                                       if (data == 'Nodatafound') {
                                           alert("nodata");
                                           //$("#datanotfound").show();
                                           //$("#EmpIndex").hide();
 
                                       } else {
-                                          // alert("else");
+                                         
+                                           alert("else");
                                           var mappedTasks = $.map(ParsedData, function (item) {
                                               return new Task(item);
                                            
                                           });
-
-                                          self.tasks(mappedTasks);
-                                       
-                                          } 
+                                      
+                                         self.tasks(mappedTasks);
+                                       //  ko.applyBindings(new appViewModel(), document.getElementById("EmployeeIndex"));
+                                        
+                                      }  //$.each(ParsedData, function (key, value) {
+                                      //    self.tasks.push(value);
+                                      //    $("#Home").load('/Templates/Employee/Index1.html');
+                                      //})
+                                      
                                   });
                               }
-                          });
+                         });
                       });
 
                       })
@@ -101,15 +106,14 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
                   //Add employee.
                   this.get('#/AddEmployee/0', function (context) {
                       //this.AddEmployee = function () {
-                      //   alert("add");
+                    
                       $("#Home").load('/Templates/Employee/Create.html', function (items) {
                           //$("#EmpIndex").hide();
                           //$("#Empcreate").show();
                           $.getJSON("/Employee/GetDepartment/", function (data) {     //Check if department exist.
-                            //  alert(data); 
+                           
                               var ParsedData = JSON.parse(data);
                            
-                              alert(data);
                               var mappedTasks = $.map(ParsedData, function (item) {
                                   return new Task(item);
                               });
@@ -192,15 +196,12 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
                       });
                   });
 
-
-
                   //Back to employee List
                   this.get('#/BackToEmpList/', function (context) {
                       context.log('Yo yo yo');
                   
                       window.location.hash = "#/EmployeeList/";
                   });
-
 
                   //Department list.
                   this.get('#/DepartmentList/', function (context) {
@@ -223,6 +224,7 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
                                   });
 
                                   self.tasks(mappedTasks);
+                                  ko.applyBindings(new appViewModel(), document.getElementById("DeptIndex"));
                               }
                           });
 
@@ -235,7 +237,7 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
                       //self.AddDepartment = function () {
                       //  alert("add");
                       $("#Home").load('/Templates/Department/Create.html', function (items) {
-                          alert("add");
+                         // alert("add");
                       });
                       //$("#divhome").hide();
                       //$("#Deptcreate").show();
@@ -245,10 +247,10 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
                   //add department into database.
                   this.get('#/CreateDeparment/', function (context, data) {
                       //   self.CreateDepartment = function () {
-                       alert("create");
+                     //  alert("create");
 
                        var DepartmentName = document.getElementById("txtdept").value;//self.Department();
-                      alert(DepartmentName);
+                  //    alert(DepartmentName);
                       $("#error").html("");
                       $("#error").show();
                       if (DepartmentName == "") {
@@ -339,6 +341,7 @@ define(['jquery', 'knockout', 'sammy'], function ($, ko, sammy) {
           })(jQuery);
 
     };
+
 });
 
 

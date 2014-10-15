@@ -62,6 +62,12 @@
     <Reference Include="FunScript.TypeScript.Binding.lib">
       <HintPath>..\packages\FunScript.TypeScript.Binding.lib.1.1.0.37\lib\net40\FunScript.TypeScript.Binding.lib.dll</HintPath>
     </Reference>
+    <Reference Include="jQueryTmpl">
+      <HintPath>..\packages\jquery-tmpl.net.0.6\lib\net40\jQueryTmpl.dll</HintPath>
+    </Reference>
+    <Reference Include="jQueryTmpl.Mvc">
+      <HintPath>..\packages\jquery-tmpl.net.0.6\lib\net40\jQueryTmpl.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -146,13 +152,16 @@
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\Image\loading-icon.gif" />
     <Content Include="Content\Image\round-loading-icon.gif" />
+    <Content Include="Javascripts\EmployeeTemplate.js" />
+    <Content Include="Javascripts\jquery-1.10.2.js" />
     <Content Include="Javascripts\jquery-1.10.2.min.js" />
+    <Content Include="Javascripts\jquery.tmpl.js" />
     <Content Include="Javascripts\knockout-3.2.0.js" />
-    <Content Include="Javascripts\main.js" />
+    <Content Include="Javascripts\app.js" />
     <Content Include="Content\js\demo1.js" />
     <Content Include="Content\js\Demoknockout.js" />
     <Content Include="Content\js\EmployeeJquery.js" />
-    <Content Include="Javascripts\EmployeeKnockout.js" />
+    <Content Include="Content\js\EmployeeKnockout.js" />
     <Content Include="Javascripts\EmpRequire.js" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\Test.pubxml" />
@@ -184,18 +193,20 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Templates\Department\Create.html" />
-    <Content Include="Templates\Department\DepartmentNotFound.html" />
-    <Content Include="Templates\Department\Details.html" />
-    <Content Include="Templates\Department\Edit.html" />
-    <Content Include="Views\Department\Hello.html" />
     <Content Include="Templates\Department\Index.html" />
+    <Content Include="Templates\Department\DepartmentNotFound.html" />
+    <Content Include="Templates\Department\Detail.html" />
+    <Content Include="Templates\Department\Edit12.html" />
+    <Content Include="Templates\Employee\demo.html" />
+    <Content Include="Templates\Employee\Dropdown.html" />
+    <Content Include="Views\Department\Hello.html" />
     <Content Include="Templates\Department\detailnotfound.html" />
     <Content Include="Templates\Employee\Create.html" />
     <Content Include="Templates\Employee\DeptNotFound.html" />
     <Content Include="Templates\Employee\Details.html" />
     <Content Include="Templates\Employee\Edit.html" />
     <Content Include="Templates\Employee\EmployeeNotFound.html" />
-    <Content Include="Templates\Employee\Index1.html" />
+    <Content Include="Templates\Employee\Index.html" />
     <Content Include="Templates\Home\Index1.html" />
     <Content Include="Templates\Index.html" />
     <Content Include="Web.config">

@@ -1,20 +1,19 @@
-﻿ 
-   <div id="DeptIndex">
-    <table class="table">
-        <tr><td><h2 style='color:blue'> Department Details  </h2></tr></td>
-        <tr><td><a href="#">Home</a>|<a href="#/AddDepartment/0">Create New</a></td></tr>
-        <tr><td><b>Department</b></td></tr>
-        <tr><td colspan="4"><pre data-bind="text: JSON.stringify(ko.toJS($data), null, 3)"></pre></td></tr>
-        <tr data-bind="foreach: tasks">
-            <td>Hi</td>
-            <td><span data-bind="text:Department"></span> </td>
-            <td><a data-bind="attr: { href : DeptUpdateUrl}">Edit</a></td>
-            <td><a data-bind="attr: { href : DeptDetailUrl}">Detail</a></td>
-            <td><a data-bind="attr: { href : DeptDeletelUrl}">Delete</a></td>
+﻿
 
+
+    <script type="text/html" id="Departmenttemplate" >
+
+    <table>
+        <tr>
+            <td data-bind="text:Department" class="table"> </td>
+
+            <td><a data-bind="attr: { href : DeptUpdateUrl}" class="table">Edit</a></td>
+            <td><a data-bind="attr: { href : DeptDetailUrl}" class="table">Detail</a></td>
+            <td><a data-bind="attr: { href : DeptDeletelUrl}" class="table">Delete</a></td>
         </tr>
-
     </table>
+</script>
 
 
-</div>
+
+

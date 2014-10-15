@@ -1,4 +1,14 @@
 ﻿    <!-- Add Employee-->
+
+<script type="text/html" id="AddEmployee">
+   
+    <select data-bind="options :$root.dept()"></select>
+    
+</script>
+
+
+
+<!--  
     <div id="Empcreate">
         <table class="table">
             <h2 style='color:blue'> Create new department </h2>
@@ -23,16 +33,16 @@
             <tr>
                 <td>Department:</td>
                 <td>
-                  <select id='select' data-bind="foreach:tasks ">
+                    <select id='select' data-bind="foreach:tasks ">
                         <option data-bind="value : Department,text:Department ,value : Id"></option>
                     </select> <div id="errordept" style="color:red"></div>
-                 </td>
+                </td>
             </tr>
             <tr>
                 <td>
                     <a href="#/CreateEmployee/" class="btn btn-default">Create</a>
                     <a href="#/AddEmployee/0" class="btn btn-default">Cancel</a>
-                    <!-- <input type="button" data-bind="click: CreateEmployee" value="Create" class="btn btn-default"><input type="button" value="Create" class="btn btn-default">-->
+               
                 </td>
             </tr>
             <tr>
@@ -44,3 +54,4 @@
 
     </div>
 
+-->

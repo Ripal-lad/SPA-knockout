@@ -1,40 +1,36 @@
-﻿    <!-- Details of Employee-->
-    <div id="Empdetail" style="display:none">
-        <table class="table">
-            <h2 style='color:blue'> Create new department </h2>
-            <tr>
-            <tr>
-                <td>Name:</td>
-                <td data-bind="value :Name,text:DeptName"></td>
-            </tr>
-            <tr>
-                <td>Designation:</td>
-                <td>
-                <td data-bind="value : Designation,text:DeptName"></td>
-            </tr>
+﻿   
+<script type="text/html" id="EmployeeDetails">
+    
+            <table class="table">
+                <tr><td><h2 style='color:blue'>Details of <span data-bind="text :Name"> </span> </h2></td></tr>
+            
+    <tr>
+        <td><b>Name:</b></td>
+        <td data-bind="text :Name,value:Name"></td>
+    </tr>
+    <tr>
+        <td><b>Designation:</b></td>
+        <td data-bind="text : Designation"></td>
+    </tr>
+    <tr>
+        <td><b>Department:</b></td>
+        <td data-bind="text : Department"></td>
+    </tr>
+    <tr>
+        <td><b>Emailid:</b></td>
+        <td data-bind="text : Emailid"></td>
+    </tr>
+    <tr>
+        <td><b>ContactNo:</b></td>
+        <td data-bind="text : Contactno"></td>
+    </tr>
 
-            <tr>
-                <td>Emailid:</td>
-                <td data-bind="value : Emailid,text:DeptName"></td>
-            </tr>
-            <tr>
-                <td>ContactNo:</td>
-                <td data-bind="value : Contactno,text:DeptName"></td>
-            </tr>
-            <tr>
-                <td>Department:</td>
-                <td>
-                    <select id='select' data-bind="foreach: tasks ">
-                        <option data-bind="value : Department,text:Department ,value : Id"></option>
-                    </select> <div id="errordept" style="color:red"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="#/BackToEmpList/">Back to List</a>
-                </td>
-            </tr>
-
+    <tr>
+        <td>
+            <a href="#/BackToEmpList/">Back to List</a>
+        </td>
+    </tr>
         </table>
 
-    </div>
+</script>
+

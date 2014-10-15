@@ -5,7 +5,7 @@
     <link href="../Content/css/Site.css" rel="stylesheet" type="text/css" />
     <link href="../Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="../Content/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <script data-main="/Javascripts/main.js" src="../Scripts/require.js"></script>
+    <script data-main="/Javascripts/app.js" src="../Scripts/require.js"></script>
     </head>
     <body>
         
@@ -27,7 +27,7 @@
                     </div>
                     
                     <div class="container body-content" style="text-align:center">
-                        <h4 id="loading" style="color:black;display:none"><span style="background-color: yellow"> Loading...</span></h4>
+                        <h4 id="loading" style="color:black"><span style="background-color: yellow"> Loading...</span></h4>
                     </div>
 
                     <div class="navbar-collapse collapse ">
@@ -37,96 +37,81 @@
                 </div>
 
             </div>
-        <div class="container body-content jumbotron" id="Home">                                                                                                                                                                                    
-           </div>
-            <!------------------------------------------------ Home page------------------------------------------------
-                
+       
+        <div class="container body-content jumbotron" id="Home">
 
-        <div id="divhome">
+            <!--Home page -->
+            <div id="index" style="display:none">
 
-                  <h2 style="color:blue"><u>Employee Management System</u></h2>
-                  <p class="lead" style="color:chocolate">
-                      Employee management system makes it easy to check the details of Employees and Department.
-                  </p>
+                <h2 style="color:blue"><u>Employee Management System</u></h2>
+                <p class="lead" style="color:chocolate">
+                    Employee management system makes it easy to check the details of Employees and Department.
+                </p>
 
+                <div>
+                    <a href="#/EmployeeList/">Employee Detail</a>
+                </div>
+                <div>
+                    <a href="#/DepartmentList/">Department Detail</a>
 
-                  <div>
-                      <a href="#/EmployeeList/" data-bind="click: $root.Employee">Employee Detail</a>
-                  </div>
-                  <div>
-                      <a href="#/DepartmentList/" data-bind="click: $root.DepartmentDetail">Department Detail</a>
+                </div>
+            </div>
 
-                  </div>
-              </div>
+            <!--Employee table-->
+            <div id="EmpIndex" style="display:none">
+                <h2 style='color:blue'> Employee Details  </h2>
+                <a href="#/">Home</a>|<a href="#/AddEmployee/0">Create New</a>
+                <table class="table">
+                    <tr><td><b>Name</b></td><td><b>Designation</b></td><td><b>Emailid</b></td><td><b>Contactno</b></td></tr>
+                </table>
+            </div>
 
-              <!--------------------------------------------------Employee Home page-----------------------------------------
-              <div id="EmpIndex" style="display:none">
-                  <table class="table">
-                      <h2 style='color:blue'> Employee Details  </h2>
-                     <tr><td><a href="#/">Home</a>|<a href="#/AddEmployee/0" >Create New</a></td></tr>
+            <!--Add Employeee-->
+            <div id="Empcreate" style="display:none">
+                <table class="table">
+                    <h2 style='color:blue'> Create Employee </h2>
+                    <tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td><input type="text" data-bind="value :Name" placeholder="Enter name "><div id="errorname" style="color:red"></div></td>
+                    </tr>
+                    <tr>
+                        <td>Designation:</td>
+                        <td><input type="text" data-bind="value : Designation" placeholder="Enter designation "><div id="errordesignation" style="color:red"></div></td>
+                    </tr>
 
-                      <tr><td><b>Name</b></td><td><b>Designation</b></td><td><b>Emailid</b></td><td><b>Contactno</b></td></tr>
-                      <tbody data-bind="foreach: tasks ">
-                          <tr>
-                              <td> <span data-bind="text: Name"></span> </td>
-                              <td> <span data-bind="text: Designation"></span> </td>
-                              <td> <span data-bind="text: Emailid"></span> </td>
-                              <td> <span data-bind="text: Contactno"></span> </td>
-                             <td><a  data-bind="attr: { href:EmpupdateUrl}">Edit</a></td>
-                              <td><a data-bind="attr: { href:EmpDetailUrl}">Detail</a></td>
-                              <td><a data-bind="attr: { href:EmpDeleteUrl}">Delete</a></td>
-                          <tr>
-                      </tbody>
-                  </table>
-              </div>
+                    <tr>
+                        <td>Emailid:</td>
+                        <td><input type="text" data-bind="value : Emailid" placeholder="Enter Emailid "><div id="erroremailid" style="color:red"></div></td>
+                    </tr>
+                    <tr>
+                        <td>ContactNo:</td>
+                        <td><input type="text" data-bind="value : Contactno" placeholder="Enter ContactNo "><div id="errorcontactno" style="color:red"></div></td>
+                    </tr>
+                    <tr>
+                        <td>Department:</td>
+                        <td>
+                            <select id='select' data-bind="options:dept,optionsValue:dept.DName ">
+                       </select> <div id="errordept" style="color:red"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#/CreateEmployee/" class="btn btn-default">Create</a>
+                            <a href="#/CancelAddEmployee/" class="btn btn-default">Cancel</a>
 
-              <!-- Add Employee--
-              <div id="Empcreate" style="display:none">
-                  <table class="table">
-                      <h2 style='color:blue'> Create Employee </h2>
-                      <tr>
-                      <tr>
-                          <td>Name:</td>
-                          <td><input type="text" data-bind="value :Name" placeholder="Enter name "><div id="errorname" style="color:red"></div></td>
-                      </tr>
-                      <tr>
-                          <td>Designation:</td>
-                          <td><input type="text" data-bind="value : Designation" placeholder="Enter designation "><div id="errordesignation" style="color:red"></div></td>
-                      </tr>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#/BackToEmpList/">Back to List</a>
+                        </td>
+                    </tr>
+                </table>
 
-                      <tr>
-                          <td>Emailid:</td>
-                          <td><input type="text" data-bind="value : Emailid" placeholder="Enter Emailid "><div id="erroremailid" style="color:red"></div></td>
-                      </tr>
-                      <tr>
-                          <td>ContactNo:</td>
-                          <td><input type="text" data-bind="value : Contactno" placeholder="Enter ContactNo "><div id="errorcontactno" style="color:red"></div></td>
-                      </tr>
-                      <tr>
-                          <td>Department:</td>
-                          <td>
-                              <select id='select' data-bind="foreach: tasks ">
-                                  <option data-bind="value : Department,text:Department ,value : Id"></option>
-                              </select> <div id="errordept" style="color:red"></div>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>
-                              <a href="#/CreateEmployee/" class="btn btn-default">Create</a>
-                              <a href="#/CancelAddEmployee/" class="btn btn-default">Cancel</a>
+            </div>
 
-                          </td>
-                      </tr>
-                      <tr>
-                          <td>
-                              <a href="#/BackToEmpList/">Back to List</a>
-                          </td>
-                      </tr>
-                  </table>
-
-              </div>
-
-              <!-- Update emloyee detail--
+             <!-- Update emloyee detail-->
               <div id="Empupdate" style="display:none">
                   <table class="table">
 
@@ -171,177 +156,54 @@
 
               </div>
 
-              <!-- Details of Employee--
-              <div id="Empdetail" style="display:none">
-                  <table class="table">
-                      <tr><td><h2 style='color:blue'>Details of <span data-bind="text :Name"> </span> </h2></td></tr>
-                      <!--<td><input type="hidden" id="txtdeptid" data-bind="value:Deptid"></td>--
-                      <tr>
-                          <td>Name:</td>
-                          <td data-bind="text :Name"></td>
-                      </tr>
-                      <tr>
-                          <td>Designation:</td>
-                          <td data-bind="text : Designation"></td>
-                      </tr>
-                      <tr>
-                          <td>Department:</td>
-                          <td data-bind="text : Department"></td>
-                      </tr>
-                      <tr>
-                          <td>Emailid:</td>
-                          <td data-bind="text : Emailid"></td>
-                      </tr>
-                      <tr>
-                          <td>ContactNo:</td>
-                          <td data-bind="text : Contactno"></td>
-                      </tr>
-
-                      <tr>
-                          <td>
-                              <a href="#/BackToEmpList/">Back to List</a>
-                          </td>
-                      </tr>
-                    <!--  <tr><td><a href="#/Detail/">Detail</a></td></tr>--
-                  </table>
-
-              </div>
-
-              <!-- Department not Exist--
-              <div id="NoDptFound" style="display:none">
-                  <table class="table" cellpadding="10" cellspacing="20" id="datanotfound">
-                      <tr><h2 style='color:blue'>Currently there is no department</h2></tr>
-                      <tr><td style='color:chocolate'> First add department details </td></tr>
-                      <tr><td><a href='#' class='createdept'> Add Department </a>  </td></tr>
-                  </table>
-
-              </div>
-
-              <!-- No employee found--
-              <div id="datanotfound" style="display:none">
-                  <table class="table" cellpadding="10" cellspacing="20" id="datanotfound">
-                      <tr><h2 style='color:blue'> Employee Details  </h2></tr>
-                      <tr><td style='color:blue'><a href='#'> Home </a>|<a href='#'> Create new </a>
-                      <tr><td style='color:blue'>No data found </td></tr>
-                  </table>
-
-              </div>
 
 
-              <!---------------------------------------------Department Home page--------------------------------------
-            <div id="DeptIndex" style="display:none">
-             
-                  <table class="table">
-                      <h2 style='color:blue'> Department Details  </h2>
-                      <tr><td><a href="#/">Home</a>|<a href="#/AddDepartment/0">Create New</a></td></tr>
-                      <tr><td><b>Department</b></td></tr>
-                      <pre data-bind="text: JSON.stringify(ko.toJS($data), null, 3)"></pre>
-                      <tbody data-bind="foreach: tasks">
-                          <tr>
-                              <td> <span data-bind="text:Department   "></span> </td>
-                              <td><a data-bind="attr: { href : DeptUpdateUrl}">Edit</a></td>
-                              <td><a data-bind="attr: { href : DeptDetailUrl}">Detail</a></td>
-                              <td><a data-bind="attr: { href : DeptDeletelUrl}">Delete</a></td>
-                          <tr>
-                      </tbody>
-                  </table>
-              </div>
+         
+                    <!--Department table-->
+                    <div id="depttable" style="display:none">
+                        <table class="table">
+                            <tr><td><h2 style='color:blue'> Department Details  </h2></tr></td>
+                            <tr><td><a href="#/">Home</a>|<a href="#/AddDepartment/0">Create New</a></td></tr>
+                            <tr><td><b>Department</b></td></tr>
 
-              <!-- Create New Department --
-              <div id="Deptcreate" style="display:none">
-                  <table class="table">
-                      <h2 style='color:blue'> Create new department </h2>
+                        </table>
+                    </div>
 
-                      <tr>
-                      <tr>
-                          <td>Department Name:</td>
-                          <td><input type="text" id="txtdept" data-bind="value : DeptName,text:DeptName" placeholder="Enter department name "><div id="error" style="color:red"></div></td>
-                      </tr>
-                      <tr>
-                          <td>
-                              <a href="#/CreateDeparment/" class="btn btn-default">Create</a>
-                              <a href="#/CancelAddDept/" class="btn btn-default">Cancel</a>
+                    <!--Department Update-->
+                    <div id="Departmenttupdate" style="display:none">
+                        <table class="table">
+                            <h2 style='color:blue'> Update department </h2>
 
-                          </td>
-                      </tr>
-                      <tr><td><a href="#/BackToDeptList/">Back to List</a></td></tr>
-                  </table>
+                        </table>
+                    </div>
 
-              </div>
+                    <!--Department Detail-->
+                    <div id="Deptdetail" style="display:none">                       
+                          
+                           <h2 style="color:blue">  Details of <span data-bind="text :Department "></span></h2>
+                        <a href="#/BackToDeptList/">Back to List</a>
+                        <table class="table" cellpadding="10" cellspacing="20" id="deptdetailtable">
+                            <tr><td><b>Name</b></td><td><b>Designation</b></td><td><b>Emailid</b></td><td><b>Contactno</b></td></tr>
+                        </table>
+                    </div>
 
-              <!-- Edit Departmen--
-              <div id="Deptupdate" style="display:none">
+                    <!-- Details not found Department-->
+                    <div id="detailnotfound" style="display:none">
+                        
+                            <h2 style="color:blue">  Details of <span data-bind="text : Department "></span></h2>
+                          
+                        <table class="table" cellpadding="10" cellspacing="20">
+                            <tr><td> data found</td></tr>
+                            <tr><td><a href="#/BackToDeptList/">Back to List</a></td></tr>
+                        </table>
 
-                  <table class="table">
-                      <h2 style='color:blue'> Update department </h2>
-                      <tbody>
+                    </div>
 
-                          <tr>
-                               <td><input type="hidden" data-bind="value:DepteditId"></td>
-                          </tr>
-                          <tr>
-                              <td>Department Name:</td>
-                              <td><input id='txtdept' data-bind="text: Department ,value:Department"><div id="UpdateError" style="color:red"></div></td>
-                          </tr>
-                          <tr>
-                              <td>
-                                  <a href="#/EditDepartment/0" class="btn btn-default">Update</a>
-                                  <a href="#/CancelEdit/" class=" btn btn-default">Cancel</a>
-                              </td>
-                          </tr>
-                          <tr><td><a href="#/BackToDeptList/">Back to List</a></td></tr>
+            <div data-bind="template: { name:displayMode,foreach:tasks }">
+            </div>
+                 
+            
 
-                      </tbody>
-                  </table>
-
-              </div>
-
-              <!-- Detail Department --
-              <div id="Deptdetail" style="display:none">
-                  <table class="table" cellpadding="10" cellspacing="20" id="deptdetailtable">
-                      <tr><h2 style="color:blue">  Details of <span data-bind="text :Department "></span></h2></tr>
-                      <tr><td><b>Name</b></td><td><b>Designation</b></td><td><b>Emailid</b></td><td><b>Contactno</b></td></tr>
-                      <tbody data-bind="foreach: tasks ">
-                          <tr>
-                              <td> <span data-bind="text: Name"></span> </td>
-                              <td> <span data-bind="text: Designation"></span> </td>
-                              <td> <span data-bind="text: Emailid"></span> </td>
-                              <td> <span data-bind="text: Contactno"></span> </td>
-                          </tr>
-                       </tbody>
-                      <tr><td><a href="#/BackToDeptList/">Back to List</a></td></tr>
-                  </table>
-
-              </div>
-
-              <!-- Detail not found Department--
-              <div id="detailnotfound" style="display:none">
-                  <table class="table" cellpadding="10" cellspacing="20" id="datanotfound">
-                      <tr><h2 style="color:blue">  Details of <span data-bind="text : Department "></span></h2></tr>
-                      <tr><td>No data found</td></tr>
-                      <tr><td><a href="#/BackToDeptList/">Back to List</a></td></tr>
-                  </table>
-
-              </div>
-
-              <!-- No department found --
-              <div id="Deptnotfound" style="display:none">
-                  <table class="table" cellpadding="10" cellspacing="20" id="datanotfound">
-                      <tr><td><h2 style='color:blue'>  Currently there is no department. </h2></td> </tr>
-                      <tr><td><h3 style='color:chocolate'>  First add department</h3></td></tr>
-                      <tr><td><a href='#' class='createdept'> Add Department </a>  </td></tr>
-                  </table>
-
-              </div>
-                 -->
-
-       
-      
-    <!--     <script type="text/javascript" src="../Scripts/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="../Scripts/knockout-3.2.0.js"></script>
-        <script src="../Scripts/Sammy.js"></script>
-           <script type="text/javascript" src="../Content/js/EmployeeRequire.js"> </script>
-            <script src="../Scripts/Sammy.js"></script>-->
         
 </body>
 </html>
