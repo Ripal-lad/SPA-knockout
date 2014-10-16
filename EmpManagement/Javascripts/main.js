@@ -2,18 +2,41 @@
 requirejs.config({
     baseUrl: '/Javascripts',
     paths: {
-        knockout: "knockout-3.2.0",
         jquery: "jquery-1.10.2.min",
+      //  jquery: "jquery-1.10.2",
+        jqueryTmpl: "jquery.tmpl",
+        knockout: "knockout-3.2.0",
         sammy:"Sammy",
         EmployeeRequire: "EmpRequire",
-      //  text: "require-text",
+        demo: "EmpTemplate",
+        employeelist: "EmployeeList",
+     
+     //    text: "text",
         }
 });
 
 
-requirejs(['jquery','knockout','sammy','EmployeeRequire'],
- function ($,ko,sammy,appViewModel) {
-    alert("Hello");
-    ko.applyBindings(new appViewModel());
-});
+requirejs(['jquery', 'jqueryTmpl', 'knockout', 'sammy', 'demo'],
+ function ($,JT,ko,sammy,appViewModel) {     
+     ko.applyBindings(new appViewModel());
+ });
+
+
+
+
+//   var viewModel = {
+//    views: ko.observableArray([
+//        new View("one", "oneTmpl", subModelA),
+//        new View("two", "twoTmpl", subModelB)
+//        ]),
+//    selectedView: ko.observable()    
+//};
+
+//ko.applyBindings(viewModel);
+    //appViewModel = {
+    //    Emp: new EmployeeViewModel(),
+    //}
+   
+
+
 
